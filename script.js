@@ -385,3 +385,262 @@
   }
 
 })();
+
+// ===================================
+// DECISION TREE (Section 3.5)
+// ===================================
+let decisionTreeAnswers = {};
+
+document.addEventListener('DOMContentLoaded', function() {
+  // Decision Tree button click handling
+  const dtOptions = document.querySelectorAll('.dt-option');
+  dtOptions.forEach(btn => {
+    btn.addEventListener('click', function() {
+      const currentQuestion = this.closest('.dt-question').getAttribute('data-question');
+      const value = this.getAttribute('data-value');
+      const nextQuestion = this.getAttribute('data-next');
+      
+      // Store answer
+      decisionTreeAnswers['q' + currentQuestion] = value;
+      
+      // Hide current question
+      document.querySelector(`.dt-question[data-question="${currentQuestion}"]`).removeAttribute('data-active');
+      
+      // Show next question or result
+      if (nextQuestion === 'result') {
+        showDecisionTreeResult();
+      } else {
+        document.querySelector(`.dt-question[data-question="${nextQuestion}"]`).setAttribute('data-active', 'true');
+      }
+    });
+  });
+});
+
+function showDecisionTreeResult() {
+  // Generate recommendation based on answers
+  const result = generateStackRecommendation(decisionTreeAnswers);
+  
+  // Update result display
+  document.getElementById('resultDatabase').textContent = result.database.tech;
+  document.getElementById('resultDatabaseCost').textContent = result.database.cost;
+  document.getElementById('resultDatabaseWhy').textContent = result.database.why;
+  
+  document.getElementById('resultReporting').textContent = result.reporting.tech;
+  document.getElementById('resultReportingCost').textContent = result.reporting.cost;
+  document.getElementById('resultReportingWhy').textContent = result.reporting.why;
+  
+  document.getElementById('resultDashboard').textContent = result.dashboard.tech;
+  document.getElementById('resultDashboardCost').textContent = result.dashboard.cost;
+  document.getElementById('resultDashboardWhy').textContent = result.dashboard.why;
+  
+  document.getElementById('resultForms').textContent = result.forms.tech;
+  document.getElementById('resultFormsCost').textContent = result.forms.cost;
+  document.getElementById('resultFormsWhy').textContent = result.forms.why;
+  
+  document.getElementById('resultIntegration').textContent = result.integration.tech;
+  document.getElementById('resultIntegrationCost').textContent = result.integration.cost;
+  document.getElementById('resultIntegrationWhy').textContent = result.integration.why;
+  
+  document.getElementById('resultOrchestration').textContent = result.orchestration.tech;
+  document.getElementById('resultOrchestrationCost').textContent = result.orchestration.cost;
+  document.getElementById('resultOrchestrationWhy').textContent = result.orchestration.why;
+  
+  document.getElementById('resultLLM').textContent = result.llm.tech;
+  document.getElementById('resultLLMCost').textContent = result.llm.cost;
+  document.getElementById('resultLLMWhy').textContent = result.llm.why;
+  
+  document.getElementById('resultTotalMonthly').innerHTML = result.totalMonthly;
+  document.getElementById('resultTotalSetup').innerHTML = result.totalSetup;
+  document.getElementById('resultTimeline').textContent = result.timeline;
+  document.getElementById('resultCompliance').innerHTML = result.compliance;
+  
+  // Show result screen
+  document.getElementById('dtResult').setAttribute('data-active', 'true');
+}
+
+function generateStackRecommendation(answers) {
+  const result = {
+    database: {},
+    reporting: {},
+    dashboard: {},
+    forms: {},
+    integration: {},
+    orchestration: {},
+    llm: {},
+    totalMonthly: '',
+    totalSetup: '',
+    timeline: '',
+    compliance: ''
+  };
+  
+  // Database recommendation
+  if (answers.q2 === 'relational') {
+    result.database = {
+      tech: 'PostgreSQL + pgvector',
+      cost: '$100-300/month • ₹8,000-24,000/month',
+      why: 'Structured GL data with ACID guarantees + semantic search capability via pgvector extension'
+    };
+  } else if (answers.q2 === 'graph') {
+    result.database = {
+      tech: 'Neo4j + PostgreSQL',
+      cost: '$500-1,500/month • ₹40,000-1,20,000/month',
+      why: 'Neo4j for relationship queries (ownership chains, intercompany flows) + PostgreSQL for transactional data'
+    };
+  } else if (answers.q2 === 'unstructured') {
+    result.database = {
+      tech: 'PostgreSQL + Pinecone',
+      cost: '$200-600/month • ₹16,000-48,000/month',
+      why: 'Pinecone for semantic search over documents + PostgreSQL for structured metadata'
+    };
+  } else {
+    result.database = {
+      tech: 'PostgreSQL + pgvector + MongoDB',
+      cost: '$300-800/month • ₹24,000-64,000/month',
+      why: 'PostgreSQL for transactions, pgvector for semantic search, MongoDB for variable-structure documents'
+    };
+  }
+  
+  // Reporting recommendation
+  if (answers.q3 === 'powerbi') {
+    result.reporting = {
+      tech: 'Power BI',
+      cost: '$10-15/user/month × 15 users = $150-225/month • ₹12,000-18,000/month',
+      why: 'Existing licenses, familiar to controllers, enterprise governance already configured'
+    };
+  } else if (answers.q3 === 'tableau') {
+    result.reporting = {
+      tech: 'Tableau',
+      cost: '$15-25/user/month × 15 users = $225-375/month • ₹18,000-30,000/month',
+      why: 'Existing licenses, strong visualization capabilities, team already trained'
+    };
+  } else {
+    result.reporting = {
+      tech: 'Metabase (open source)',
+      cost: '$0/month (self-hosted) + $100-200 infrastructure • ₹8,000-16,000 infrastructure',
+      why: 'Budget-friendly, self-hosted for data control, SQL-first approach'
+    };
+  }
+  
+  // Dashboard recommendation
+  if (answers.q4 === 'yes-custom' && answers.q9 === 'has-frontend') {
+    result.dashboard = {
+      tech: 'React + Recharts',
+      cost: '$0/month operational + $5,000-10,000 build • ₹4,00,000-8,00,000 build',
+      why: 'Custom agent UI with real-time updates, tool trace visibility, full control over UX'
+    };
+  } else if (answers.q4 === 'yes-custom' && answers.q9 === 'no-frontend') {
+    result.dashboard = {
+      tech: 'Retool',
+      cost: '$10-50/user/month × 10 users = $100-500/month • ₹8,000-40,000/month',
+      why: 'Low-code dashboard builder, fast to deploy, no frontend engineers needed'
+    };
+  } else {
+    result.dashboard = {
+      tech: 'Power BI / Tableau (from reporting layer)',
+      cost: 'Included in reporting cost',
+      why: 'Standard BI dashboards sufficient for agent monitoring and reporting'
+    };
+  }
+  
+  // Forms recommendation
+  if (answers.q9 === 'has-frontend') {
+    result.forms = {
+      tech: 'React Hook Form',
+      cost: '$0/month (open source)',
+      why: 'Client-side validation, field dependencies, TypeScript support, integrates with React dashboard'
+    };
+  } else {
+    result.forms = {
+      tech: 'Cognito Forms / Typeform',
+      cost: '$15-50/month • ₹1,200-4,000/month',
+      why: 'No-code form builder, conditional logic built-in, easy for non-technical users to configure'
+    };
+  }
+  
+  // Integration recommendation
+  result.integration = {
+    tech: 'REST API',
+    cost: '$0/month (included in infrastructure)',
+    why: 'Standard integration pattern, mature, every ERP system provides REST APIs'
+  };
+  
+  // Orchestration recommendation
+  if (answers.q1 === 'python') {
+    result.orchestration = {
+      tech: 'LangGraph',
+      cost: '$0/month (open source) + $200-600/month hosting • ₹16,000-48,000/month hosting',
+      why: 'Python-native, built-in HITL and state persistence, production-ready, active community'
+    };
+  } else if (answers.q1 === 'csharp') {
+    result.orchestration = {
+      tech: 'Semantic Kernel',
+      cost: '$0/month (open source) + $200-600/month hosting • ₹16,000-48,000/month hosting',
+      why: '.NET native, Azure integration, familiar to your team, enterprise logging'
+    };
+  } else {
+    result.orchestration = {
+      tech: 'LangGraph',
+      cost: '$0/month (open source) + $200-600/month hosting • ₹16,000-48,000/month hosting',
+      why: 'Most mature option, language-agnostic via API, production-ready'
+    };
+  }
+  
+  // LLM costs
+  result.llm = {
+    tech: 'Claude Sonnet 4',
+    cost: '$0.40-1.20/run • ₹32-96/run (100-300 runs/month = $40-360/month • ₹3,200-28,800/month)',
+    why: 'Based on typical close review agent: 2,000-6,000 tokens input, 1,000-3,000 tokens output per run'
+  };
+  
+  // Calculate totals
+  const budgetRange = answers.q7;
+  if (budgetRange === 'budget-low') {
+    result.totalMonthly = '$400-800/month<br/>₹32,000-64,000/month';
+    result.totalSetup = '$5,000-12,000<br/>₹4,00,000-9,60,000';
+  } else if (budgetRange === 'budget-mid') {
+    result.totalMonthly = '$800-1,800/month<br/>₹64,000-1,44,000/month';
+    result.totalSetup = '$10,000-20,000<br/>₹8,00,000-16,00,000';
+  } else if (budgetRange === 'budget-high') {
+    result.totalMonthly = '$2,000-4,000/month<br/>₹1,60,000-3,20,000/month';
+    result.totalSetup = '$20,000-40,000<br/>₹16,00,000-32,00,000';
+  } else {
+    result.totalMonthly = '$4,000-8,000/month<br/>₹3,20,000-6,40,000/month';
+    result.totalSetup = '$40,000-80,000<br/>₹32,00,000-64,00,000';
+  }
+  
+  // Timeline
+  if (answers.q8 === 'timeline-fast') {
+    result.timeline = '2-4 weeks (rapid prototype, limited features)';
+  } else if (answers.q8 === 'timeline-normal') {
+    result.timeline = '8-12 weeks (full features, testing, documentation)';
+  } else {
+    result.timeline = '4-6 months (enterprise rollout, change management, training)';
+  }
+  
+  // Compliance
+  if (answers.q5 === 'eu' || answers.q5 === 'multi') {
+    result.compliance = '<strong>GDPR Compliance Required:</strong> EU data residency (AWS Frankfurt/Ireland or Azure West Europe), tenant isolation via row-level security in PostgreSQL, data retention policies matching client contracts (typically 7 years for audit records), encryption at rest (AES-256) and in transit (TLS 1.3), regular penetration testing, DPIA (Data Protection Impact Assessment) for high-risk processing.';
+  } else if (answers.q5 === 'uk') {
+    result.compliance = '<strong>UK GDPR Compliance:</strong> UK data residency, ICO registration, tenant isolation, 7-year retention for audit records, encryption at rest and in transit, documented data processing agreements with vendors.';
+  } else if (answers.q5 === 'us') {
+    result.compliance = '<strong>US Compliance:</strong> SOC 2 Type II recommended for enterprise clients, CCPA compliance for California clients, tenant isolation, encryption standards, audit logging for financial data access.';
+  } else if (answers.q5 === 'india') {
+    result.compliance = '<strong>Indian Compliance:</strong> Data localization as per RBI guidelines if handling payment data, tenant isolation, encryption standards, audit trails for financial transactions, retention policies per Companies Act 2013.';
+  } else {
+    result.compliance = '<strong>Multi-Jurisdiction Compliance:</strong> Strictest standard applies (GDPR + local regulations), data residency requirements vary by jurisdiction, documented cross-border transfer mechanisms, unified tenant isolation architecture.';
+  }
+  
+  // Multi-tenant security note
+  if (answers.q6 === 'multi-tenant') {
+    result.compliance += ' <strong>Multi-tenant architecture:</strong> Row-level security (RLS) in PostgreSQL mandatory, separate encryption keys per tenant, audit logging with tenant ID on every query, network isolation for tenant data processing.';
+  }
+  
+  return result;
+}
+
+function resetDecisionTree() {
+  decisionTreeAnswers = {};
+  document.querySelectorAll('.dt-question').forEach(q => q.removeAttribute('data-active'));
+  document.querySelector('.dt-question[data-question="1"]').setAttribute('data-active', 'true');
+  document.getElementById('dtResult').removeAttribute('data-active');
+}

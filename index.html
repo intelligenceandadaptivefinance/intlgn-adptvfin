@@ -706,6 +706,209 @@
       <p>Read the <em>requirement</em> column first — does it match your use case? If yes, that technology is a candidate. Now read the trade-off. If you can live with it, that's your pick. If multiple match, default to the one your team already knows or the one with the smallest operational surface area. Do not pick the newest, shiniest, or most "AI-native" technology unless it is demonstrably better for your specific requirement.</p>
     </div>
 
+    <!-- INTERACTIVE DECISION TREE -->
+    <div class="decision-tree-container" style="margin-top: 64px;">
+      <h3 class="h3">Interactive: Find your recommended stack</h3>
+      <p class="lede">Answer 10 questions to get a customized technology stack recommendation with cost estimates.</p>
+      
+      <div class="decision-tree" id="decisionTree">
+        <!-- Question 1 -->
+        <div class="dt-question" data-question="1" data-active="true">
+          <div class="dt-progress">Question 1 of 10</div>
+          <h4 class="dt-question-text">What's your team's primary programming language?</h4>
+          <div class="dt-options">
+            <button class="dt-option" data-value="python" data-next="2">Python</button>
+            <button class="dt-option" data-value="csharp" data-next="2">C# / .NET</button>
+            <button class="dt-option" data-value="javascript" data-next="2">JavaScript / TypeScript</button>
+            <button class="dt-option" data-value="mixed" data-next="2">Mixed / No preference</button>
+          </div>
+        </div>
+
+        <!-- Question 2 -->
+        <div class="dt-question" data-question="2">
+          <div class="dt-progress">Question 2 of 10</div>
+          <h4 class="dt-question-text">What's your primary data structure?</h4>
+          <div class="dt-options">
+            <button class="dt-option" data-value="relational" data-next="3">Structured (GL, transactions, chart of accounts)</button>
+            <button class="dt-option" data-value="graph" data-next="3">Relationship-heavy (ownership chains, intercompany flows)</button>
+            <button class="dt-option" data-value="unstructured" data-next="3">Unstructured (memos, contracts, policies)</button>
+            <button class="dt-option" data-value="mixed-data" data-next="3">Mixed data types</button>
+          </div>
+        </div>
+
+        <!-- Question 3 -->
+        <div class="dt-question" data-question="3">
+          <div class="dt-progress">Question 3 of 10</div>
+          <h4 class="dt-question-text">Do you already have enterprise BI tools (Power BI, Tableau)?</h4>
+          <div class="dt-options">
+            <button class="dt-option" data-value="powerbi" data-next="4">Yes - Power BI</button>
+            <button class="dt-option" data-value="tableau" data-next="4">Yes - Tableau</button>
+            <button class="dt-option" data-value="none" data-next="4">No existing BI tools</button>
+          </div>
+        </div>
+
+        <!-- Question 4 -->
+        <div class="dt-question" data-question="4">
+          <div class="dt-progress">Question 4 of 10</div>
+          <h4 class="dt-question-text">Do you need custom interactive dashboards for the agent?</h4>
+          <div class="dt-options">
+            <button class="dt-option" data-value="yes-custom" data-next="5">Yes - agent-specific UI with real-time updates</button>
+            <button class="dt-option" data-value="no-custom" data-next="5">No - standard BI reports are fine</button>
+          </div>
+        </div>
+
+        <!-- Question 5 -->
+        <div class="dt-question" data-question="5">
+          <div class="dt-progress">Question 5 of 10</div>
+          <h4 class="dt-question-text">What jurisdiction are you operating in?</h4>
+          <div class="dt-options">
+            <button class="dt-option" data-value="eu" data-next="6">European Union (GDPR applies)</button>
+            <button class="dt-option" data-value="uk" data-next="6">United Kingdom</button>
+            <button class="dt-option" data-value="us" data-next="6">United States</button>
+            <button class="dt-option" data-value="india" data-next="6">India</button>
+            <button class="dt-option" data-value="multi" data-next="6">Multiple jurisdictions</button>
+          </div>
+        </div>
+
+        <!-- Question 6 -->
+        <div class="dt-question" data-question="6">
+          <div class="dt-progress">Question 6 of 10</div>
+          <h4 class="dt-question-text">Do you work with multiple clients (multi-tenant)?</h4>
+          <div class="dt-options">
+            <button class="dt-option" data-value="multi-tenant" data-next="7">Yes - must isolate client data</button>
+            <button class="dt-option" data-value="single-tenant" data-next="7">No - internal use only</button>
+          </div>
+        </div>
+
+        <!-- Question 7 -->
+        <div class="dt-question" data-question="7">
+          <div class="dt-progress">Question 7 of 10</div>
+          <h4 class="dt-question-text">What's your monthly operational budget range?</h4>
+          <div class="dt-options">
+            <button class="dt-option" data-value="budget-low" data-next="8">Under $500 / ₹40,000</button>
+            <button class="dt-option" data-value="budget-mid" data-next="8">$500-2,000 / ₹40,000-1,60,000</button>
+            <button class="dt-option" data-value="budget-high" data-next="8">$2,000-5,000 / ₹1,60,000-4,00,000</button>
+            <button class="dt-option" data-value="budget-enterprise" data-next="8">$5,000+ / ₹4,00,000+</button>
+          </div>
+        </div>
+
+        <!-- Question 8 -->
+        <div class="dt-question" data-question="8">
+          <div class="dt-progress">Question 8 of 10</div>
+          <h4 class="dt-question-text">What's your timeline to production?</h4>
+          <div class="dt-options">
+            <button class="dt-option" data-value="timeline-fast" data-next="9">2-4 weeks (rapid prototype)</button>
+            <button class="dt-option" data-value="timeline-normal" data-next="9">6-12 weeks (standard build)</button>
+            <button class="dt-option" data-value="timeline-slow" data-next="9">3-6 months (enterprise rollout)</button>
+          </div>
+        </div>
+
+        <!-- Question 9 -->
+        <div class="dt-question" data-question="9">
+          <div class="dt-progress">Question 9 of 10</div>
+          <h4 class="dt-question-text">Do you have frontend engineers on the team?</h4>
+          <div class="dt-options">
+            <button class="dt-option" data-value="has-frontend" data-next="10">Yes - can build custom UI</button>
+            <button class="dt-option" data-value="no-frontend" data-next="10">No - need low-code/no-code options</button>
+          </div>
+        </div>
+
+        <!-- Question 10 -->
+        <div class="dt-question" data-question="10">
+          <div class="dt-progress">Question 10 of 10</div>
+          <h4 class="dt-question-text">What's your team size for this project?</h4>
+          <div class="dt-options">
+            <button class="dt-option" data-value="team-small" data-next="result">1-2 people (analyst + engineer)</button>
+            <button class="dt-option" data-value="team-medium" data-next="result">3-5 people (small team)</button>
+            <button class="dt-option" data-value="team-large" data-next="result">6+ people (dedicated squad)</button>
+          </div>
+        </div>
+
+        <!-- Result Screen -->
+        <div class="dt-result" id="dtResult">
+          <div class="dt-result-header">
+            <h3>Your Recommended Technology Stack</h3>
+            <p class="dt-result-subheader">Based on your answers, here's a customized stack for your Big 4 firm</p>
+          </div>
+          
+          <div class="dt-result-stack">
+            <div class="stack-layer">
+              <div class="stack-layer-title">Database Layer</div>
+              <div class="stack-layer-tech" id="resultDatabase">PostgreSQL + pgvector</div>
+              <div class="stack-layer-cost" id="resultDatabaseCost">$100-300/month • ₹8,000-24,000/month</div>
+              <div class="stack-layer-why" id="resultDatabaseWhy">Structured GL data with ACID guarantees + semantic search over documents</div>
+            </div>
+
+            <div class="stack-layer">
+              <div class="stack-layer-title">Reporting & BI</div>
+              <div class="stack-layer-tech" id="resultReporting">Power BI</div>
+              <div class="stack-layer-cost" id="resultReportingCost">$150-450/month • ₹12,000-36,000/month</div>
+              <div class="stack-layer-why" id="resultReportingWhy">Existing licenses + familiar to controllers</div>
+            </div>
+
+            <div class="stack-layer">
+              <div class="stack-layer-title">Dashboard & Insights</div>
+              <div class="stack-layer-tech" id="resultDashboard">React + Recharts</div>
+              <div class="stack-layer-cost" id="resultDashboardCost">$0/month + $3,000-8,000 build • ₹2,40,000-6,40,000 build</div>
+              <div class="stack-layer-why" id="resultDashboardWhy">Custom agent UI with real-time updates and tool trace visibility</div>
+            </div>
+
+            <div class="stack-layer">
+              <div class="stack-layer-title">Input Forms</div>
+              <div class="stack-layer-tech" id="resultForms">React Hook Form</div>
+              <div class="stack-layer-cost" id="resultFormsCost">$0/month (open source)</div>
+              <div class="stack-layer-why" id="resultFormsWhy">Client-side validation, field dependencies, TypeScript support</div>
+            </div>
+
+            <div class="stack-layer">
+              <div class="stack-layer-title">Integration</div>
+              <div class="stack-layer-tech" id="resultIntegration">REST API</div>
+              <div class="stack-layer-cost" id="resultIntegrationCost">$0/month (infrastructure included)</div>
+              <div class="stack-layer-why" id="resultIntegrationWhy">Standard integration with ERP, mature and well-documented</div>
+            </div>
+
+            <div class="stack-layer">
+              <div class="stack-layer-title">Orchestration</div>
+              <div class="stack-layer-tech" id="resultOrchestration">LangGraph</div>
+              <div class="stack-layer-cost" id="resultOrchestrationCost">$0 + $200-600 hosting • ₹16,000-48,000 hosting</div>
+              <div class="stack-layer-why" id="resultOrchestrationWhy">Python-first, built-in HITL and state persistence, production-ready</div>
+            </div>
+
+            <div class="stack-layer">
+              <div class="stack-layer-title">LLM Costs</div>
+              <div class="stack-layer-tech" id="resultLLM">Claude Sonnet 4</div>
+              <div class="stack-layer-cost" id="resultLLMCost">$0.40-1.20 per run • ₹32-96 per run</div>
+              <div class="stack-layer-why" id="resultLLMWhy">Based on 100-300 runs/month for close review agent</div>
+            </div>
+          </div>
+
+          <div class="dt-result-summary">
+            <div class="summary-box">
+              <div class="summary-label">Total Monthly Operational Cost</div>
+              <div class="summary-value" id="resultTotalMonthly">$800-1,800/month<br/>₹64,000-1,44,000/month</div>
+            </div>
+            <div class="summary-box">
+              <div class="summary-label">One-Time Setup Cost</div>
+              <div class="summary-value" id="resultTotalSetup">$10,000-20,000<br/>₹8,00,000-16,00,000</div>
+            </div>
+            <div class="summary-box">
+              <div class="summary-label">Timeline to Production</div>
+              <div class="summary-value" id="resultTimeline">8-12 weeks</div>
+            </div>
+          </div>
+
+          <div class="dt-result-compliance" id="resultCompliance">
+            <strong>Compliance Notes:</strong> GDPR-compliant setup requires: EU data residency (AWS Frankfurt/Ireland), tenant isolation via row-level security, data retention policies matching client contracts (typically 7 years for audit), encryption at rest and in transit.
+          </div>
+
+          <div class="dt-result-actions">
+            <button class="dt-btn-primary" onclick="window.print()">Download as PDF</button>
+            <button class="dt-btn-secondary" onclick="resetDecisionTree()">Start Over</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="example-card" style="margin-top: 32px;">
       <div class="example-tag">Worked example · Stack choices for the close agent</div>
       <p><strong>Database:</strong> PostgreSQL (GL is structured, ACID required) + pgvector (semantic search over prior-quarter memos).</p>

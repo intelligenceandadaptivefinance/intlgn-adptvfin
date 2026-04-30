@@ -1420,3 +1420,208 @@ body {
   body { background: white; }
   .quiz, .diagram-toggles, .form-actions { display: none; }
 }
+
+/* ========================================
+   DECISION TREE (Section 3.5)
+   ======================================== */
+.decision-tree-container {
+  margin: 64px 0;
+}
+.decision-tree {
+  max-width: 800px;
+  margin: 32px auto;
+  background: var(--paper);
+  border: 2px solid var(--amber);
+  border-radius: 6px;
+  padding: 40px;
+  min-height: 400px;
+  position: relative;
+}
+.dt-question {
+  display: none;
+}
+.dt-question[data-active="true"] {
+  display: block;
+  animation: fadeIn 0.3s ease;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.dt-progress {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+.dt-question-text {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--ink);
+  margin-bottom: 28px;
+  line-height: 1.4;
+}
+.dt-options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.dt-option {
+  font-family: var(--sans);
+  font-size: 16px;
+  padding: 18px 24px;
+  background: var(--paper-warm);
+  border: 2px solid var(--slate-200);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+  color: var(--ink);
+}
+.dt-option:hover {
+  background: var(--amber-pale);
+  border-color: var(--amber);
+  transform: translateX(4px);
+}
+.dt-option:active {
+  transform: translateX(2px);
+}
+.dt-result {
+  display: none;
+}
+.dt-result[data-active="true"] {
+  display: block;
+  animation: fadeIn 0.4s ease;
+}
+.dt-result-header h3 {
+  font-family: var(--serif);
+  font-size: 26px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+.dt-result-subheader {
+  font-size: 15px;
+  color: var(--slate-500);
+  margin-bottom: 32px;
+}
+.dt-result-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 32px;
+}
+.stack-layer {
+  background: var(--paper-warm);
+  border-left: 4px solid var(--amber);
+  padding: 20px 24px;
+  border-radius: 4px;
+}
+.stack-layer-title {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--amber);
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.stack-layer-tech {
+  font-family: var(--sans);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+.stack-layer-cost {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--slate-500);
+  margin-bottom: 10px;
+}
+.stack-layer-why {
+  font-size: 14px;
+  color: var(--ink-soft);
+  line-height: 1.5;
+}
+.dt-result-summary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 28px;
+}
+.summary-box {
+  background: var(--amber-pale);
+  border: 1px solid var(--amber);
+  padding: 20px;
+  border-radius: 4px;
+  text-align: center;
+}
+.summary-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+.summary-value {
+  font-family: var(--sans);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.3;
+}
+.dt-result-compliance {
+  background: var(--slate-100);
+  border-left: 3px solid var(--ink);
+  padding: 18px 20px;
+  margin-bottom: 24px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+.dt-result-compliance strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+.dt-result-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+.dt-btn-primary,
+.dt-btn-secondary {
+  font-family: var(--sans);
+  font-size: 15px;
+  font-weight: 600;
+  padding: 14px 28px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+}
+.dt-btn-primary {
+  background: var(--amber);
+  color: white;
+}
+.dt-btn-primary:hover {
+  background: var(--ink);
+}
+.dt-btn-secondary {
+  background: var(--slate-200);
+  color: var(--ink);
+}
+.dt-btn-secondary:hover {
+  background: var(--slate-300);
+}
+@media (max-width: 768px) {
+  .dt-result-summary {
+    grid-template-columns: 1fr;
+  }
+}
