@@ -993,6 +993,100 @@ body {
   margin-bottom: 8px;
 }
 
+
+/* ========================================
+   MEMORY FLOW DIAGRAM (Section 6)
+   ======================================== */
+.memory-flow-diagram {
+  max-width: 920px;
+  margin: 32px auto 48px;
+  padding: 24px;
+  background: var(--paper);
+  border: 1px solid var(--slate-200);
+  border-radius: 4px;
+}
+.memory-flow-diagram svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.memory-node-title {
+  font-family: var(--sans);
+  font-size: 16px;
+  font-weight: 600;
+  fill: var(--ink);
+}
+.memory-node-duration {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 500;
+  fill: var(--amber);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.flow-label {
+  font-family: var(--sans);
+  font-size: 12px;
+  fill: var(--slate-500);
+  font-style: italic;
+}
+.scenario-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  fill: var(--ink);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.scenario-text {
+  font-family: var(--sans);
+  font-size: 13px;
+  fill: var(--ink-soft);
+}
+
+/* Hover interactions */
+.memory-node {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.memory-node:hover rect {
+  fill: var(--amber-pale);
+  stroke: var(--amber);
+  stroke-width: 3;
+  filter: url(#glow);
+}
+.memory-node:hover .memory-node-title {
+  fill: var(--ink);
+  font-weight: 700;
+}
+.memory-node:hover .memory-node-duration {
+  fill: var(--amber);
+}
+
+.flow-path path {
+  transition: all 0.3s ease;
+}
+.memory-node:hover ~ .flow-path path,
+.flow-path:hover path {
+  stroke: var(--amber);
+  stroke-width: 3;
+  stroke-dasharray: none;
+}
+
+.memory-flow-caption {
+  margin-top: 20px;
+  padding: 16px 20px;
+  background: var(--amber-pale);
+  border-left: 3px solid var(--amber);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+.memory-flow-caption strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
 /* ========================================
    MEMORY GRID (Section 6)
    ======================================== */

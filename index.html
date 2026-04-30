@@ -934,6 +934,95 @@
     <p class="lede">Memory is what makes an agent feel intelligent across time. It is also where most confidentiality incidents start. Design memory deliberately. Default to forgetting.</p>
 
     <h3 class="h3">Three types, three purposes</h3>
+    
+    <div class="memory-flow-diagram">
+      <svg viewBox="0 0 900 420" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="memoryArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#C77A18"/>
+          </marker>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+            <feMerge>
+              <feMergeNode in="coloredBlur"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+        </defs>
+
+        <!-- FLOW PATH 1: Initial Question to Working Memory -->
+        <g class="flow-path" data-path="1">
+          <path d="M 50 210 L 190 210" fill="none" stroke="#C5CAD0" stroke-width="2" stroke-dasharray="4 3" marker-end="url(#memoryArrow)"/>
+          <text x="120" y="195" class="flow-label">User asks question</text>
+        </g>
+
+        <!-- WORKING MEMORY -->
+        <g class="memory-node" data-node="working">
+          <rect x="190" y="160" width="140" height="100" rx="6" fill="#FBE9CC" stroke="#C77A18" stroke-width="2"/>
+          <text x="260" y="195" text-anchor="middle" class="memory-node-title">Working</text>
+          <text x="260" y="215" text-anchor="middle" class="memory-node-title">Memory</text>
+          <text x="260" y="240" text-anchor="middle" class="memory-node-duration">Seconds to minutes</text>
+        </g>
+
+        <!-- FLOW PATH 2: Working to Session Memory -->
+        <g class="flow-path" data-path="2">
+          <path d="M 330 210 L 470 210" fill="none" stroke="#C5CAD0" stroke-width="2" stroke-dasharray="4 3" marker-end="url(#memoryArrow)"/>
+          <text x="400" y="195" text-anchor="middle" class="flow-label">Conversation</text>
+          <text x="400" y="210" text-anchor="middle" class="flow-label">continues</text>
+        </g>
+
+        <!-- SESSION MEMORY -->
+        <g class="memory-node" data-node="session">
+          <rect x="470" y="160" width="140" height="100" rx="6" fill="#FBE9CC" stroke="#C77A18" stroke-width="2"/>
+          <text x="540" y="195" text-anchor="middle" class="memory-node-title">Session</text>
+          <text x="540" y="215" text-anchor="middle" class="memory-node-title">Memory</text>
+          <text x="540" y="240" text-anchor="middle" class="memory-node-duration">Hours to days</text>
+        </g>
+
+        <!-- FLOW PATH 3: Session to Long-term Memory -->
+        <g class="flow-path" data-path="3">
+          <path d="M 540 260 L 540 310 L 750 310 L 750 260" fill="none" stroke="#C5CAD0" stroke-width="2" stroke-dasharray="4 3" marker-end="url(#memoryArrow)"/>
+          <text x="645" y="330" text-anchor="middle" class="flow-label">User returns</text>
+          <text x="645" y="345" text-anchor="middle" class="flow-label">next week</text>
+        </g>
+
+        <!-- LONG-TERM MEMORY -->
+        <g class="memory-node" data-node="longterm">
+          <rect x="680" y="160" width="140" height="100" rx="6" fill="#FBE9CC" stroke="#C77A18" stroke-width="2"/>
+          <text x="750" y="195" text-anchor="middle" class="memory-node-title">Long-term</text>
+          <text x="750" y="215" text-anchor="middle" class="memory-node-title">Memory</text>
+          <text x="750" y="240" text-anchor="middle" class="memory-node-duration">Weeks to months</text>
+        </g>
+
+        <!-- EXAMPLE SCENARIOS (bottom section) -->
+        <g class="scenario-examples">
+          <text x="50" y="380" class="scenario-label">What gets stored:</text>
+          
+          <!-- Working Memory Example -->
+          <g class="scenario" data-scenario="working">
+            <circle cx="210" cy="395" r="4" fill="#C77A18"/>
+            <text x="220" y="400" class="scenario-text">Current plan, tool results in flight</text>
+          </g>
+          
+          <!-- Session Memory Example -->
+          <g class="scenario" data-scenario="session">
+            <circle cx="470" cy="395" r="4" fill="#C77A18"/>
+            <text x="480" y="400" class="scenario-text">Clarifications, preferences this session</text>
+          </g>
+          
+          <!-- Long-term Memory Example -->
+          <g class="scenario" data-scenario="longterm">
+            <circle cx="690" cy="395" r="4" fill="#C77A18"/>
+            <text x="700" y="400" class="scenario-text">Patterns, learned knowledge</text>
+          </g>
+        </g>
+      </svg>
+      
+      <div class="memory-flow-caption">
+        <strong>How to read this diagram:</strong> Data flows from left to right as interactions persist. Hover over any memory node to highlight what gets stored there. Most data lives only in working memory and is discarded when the task completes.
+      </div>
+    </div>
+
     <div class="memory-grid">
       <div class="memory-card">
         <div class="memory-card-num">A</div>
