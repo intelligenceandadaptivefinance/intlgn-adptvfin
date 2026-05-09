@@ -644,3 +644,60 @@ function resetDecisionTree() {
   document.querySelector('.dt-question[data-question="1"]').setAttribute('data-active', 'true');
   document.getElementById('dtResult').removeAttribute('data-active');
 }
+
+// ===================================
+// RBAC MATRIX MODEL SELECTOR
+// ===================================
+document.addEventListener('DOMContentLoaded', function() {
+  const rbacModelBtns = document.querySelectorAll('.rbac-model-btn');
+  
+  rbacModelBtns.forEach(btn => {
+    btn.addEventListener('click', function() {
+      const modelType = this.getAttribute('data-model');
+      
+      // Update button states
+      rbacModelBtns.forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      
+      // Hide all models
+      document.querySelectorAll('.rbac-model').forEach(model => {
+        model.removeAttribute('data-active');
+      });
+      
+      // Show selected model
+      const modelMap = {
+        'simple': 'rbacSimple',
+        'function': 'rbacFunction',
+        'entity': 'rbacEntity'
+      };
+      document.getElementById(modelMap[modelType]).setAttribute('data-active', 'true');
+    });
+  });
+});
+
+function highlightRBACAccess(role) {
+  // This is a placeholder for diagram highlighting functionality
+  // In a real implementation, this would highlight specific nodes in the architecture diagram
+  
+  const accessMap = {
+    'analyst': {
+      components: ['Input Form', 'Output'],
+      description: 'Analyst can submit requests via Input Form and view their own results in Output. No access to configuration, approval workflows, or other clients data.'
+    },
+    'controller': {
+      components: ['Input Form', 'Output', 'Human-in-the-loop', 'Memory (session only)'],
+      description: 'Controller can submit requests, view all results for their client, approve flagged items at HITL checkpoint, and access session memory. Cannot configure agent or access other clients.'
+    },
+    'partner': {
+      components: ['Input Form', 'Orchestrator (config)', 'Tools', 'Memory', 'Output', 'Human-in-the-loop'],
+      description: 'Partner has full operational access: submit requests, configure agent parameters, access all memory, review audit logs, approve items. Can access all clients in their portfolio. Cannot modify system RBAC settings.'
+    },
+    'admin': {
+      components: ['All components'],
+      description: 'Admin has system-wide access: all Partner permissions plus RBAC configuration, tool integration management, and access to all audit logs across all clients.'
+    }
+  };
+  
+  const access = accessMap[role];
+  alert(`${role.toUpperCase()} ACCESS:\n\nComponents: ${access.components.join(', ')}\n\n${access.description}`);
+}
