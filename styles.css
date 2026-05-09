@@ -77,7 +77,7 @@ body {
 .masthead-inner {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 14px 32px;
+  padding: 20px 32px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -86,10 +86,10 @@ body {
 .masthead-left {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 16px;
 }
 .masthead-logo {
-  height: 28px;
+  height: 70px;
   width: auto;
   display: block;
 }
@@ -121,7 +121,7 @@ body {
 .nav-rail {
   position: fixed;
   left: 32px;
-  top: 110px;
+  top: 130px;
   width: var(--rail-width);
   z-index: 40;
 }
@@ -179,14 +179,18 @@ body {
    ======================================== */
 .content {
   max-width: var(--content-width);
-  margin: 0 auto;
+  margin-left: calc(32px + var(--rail-width) + 40px); /* Nav rail + spacing */
+  margin-right: auto;
   padding: 0 32px 120px;
   position: relative;
 }
 
 @media (max-width: 1100px) {
   .nav-rail { display: none; }
-  .content { max-width: 760px; }
+  .content { 
+    max-width: 760px;
+    margin-left: auto; /* Re-center when nav is hidden */
+  }
 }
 @media (max-width: 640px) {
   .content { padding: 0 22px 80px; }
