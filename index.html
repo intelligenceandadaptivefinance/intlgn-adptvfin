@@ -21,7 +21,7 @@
 <header class="masthead">
   <div class="masthead-inner">
     <div class="masthead-left">
-      <span class="masthead-mark">§</span>
+      <img src="iaf-logo.png" alt="Intelligence and Adaptive Finance" class="masthead-logo" style="height: 28px; width: auto; margin-right: 12px;">
       <span class="masthead-title">Agentic AI for Finance</span>
     </div>
     <div class="masthead-meta">
@@ -36,25 +36,86 @@
 
 <!-- LEFT NAVIGATION RAIL -->
 <aside class="nav-rail" aria-label="Section navigation">
-  <ol class="nav-list">
-    <li><a href="#s0" data-num="00">Welcome</a></li>
-    <li><a href="#s1" data-num="01">LLM Primer</a></li>
-    <li><a href="#s2" data-num="02">What Makes AI Agentic</a></li>
-    <li><a href="#s3" data-num="03">Architecture Diagram</a></li>
-    <li><a href="#s35" data-num="3½">Tech Stack Decisions</a></li>
-    <li><a href="#s375" data-num="3¾">Deployment & Lifecycle</a></li>
-    <li><a href="#s4" data-num="04">Loop Patterns</a></li>
-    <li><a href="#s5" data-num="05">Determinism &amp; Audit</a></li>
-    <li><a href="#s6" data-num="06">Memory</a></li>
-    <li><a href="#s7" data-num="07">Databases</a></li>
-    <li><a href="#s8" data-num="08">Inputs &amp; Reporting</a></li>
-    <li><a href="#s85" data-num="8½">Safety</a></li>
-    <li><a href="#s9" data-num="09">Capstone</a></li>
-    <li><a href="#s10" data-num="10">Pitfalls</a></li>
-    <li><a href="#s11" data-num="11">Getting Started with Claude</a></li>
-    <li><a href="#s12" data-num="12">Cost Optimization</a></li>
-    <li><a href="#s13" data-num="13">Tech References</a></li>
-  </ol>
+  <div class="nav-groups">
+    
+    <!-- Group 1: Fundamentals -->
+    <div class="nav-group" data-group="fundamentals">
+      <button class="nav-group-header" onclick="toggleNavGroup('fundamentals')">
+        <span class="nav-group-icon">🎓</span>
+        <span class="nav-group-title">Fundamentals</span>
+        <span class="nav-group-count">3</span>
+        <span class="nav-toggle">▼</span>
+      </button>
+      <ol class="nav-group-items">
+        <li><a href="#s0" data-num="00"><span class="nav-icon">📖</span>Welcome</a></li>
+        <li><a href="#s1" data-num="01"><span class="nav-icon">🧠</span>LLM Primer</a></li>
+        <li><a href="#s2" data-num="02"><span class="nav-icon">⚡</span>What Makes AI Agentic</a></li>
+      </ol>
+    </div>
+
+    <!-- Group 2: Architecture & Design -->
+    <div class="nav-group" data-group="architecture">
+      <button class="nav-group-header" onclick="toggleNavGroup('architecture')">
+        <span class="nav-group-icon">🏗️</span>
+        <span class="nav-group-title">Architecture & Design</span>
+        <span class="nav-group-count">3</span>
+        <span class="nav-toggle">▼</span>
+      </button>
+      <ol class="nav-group-items">
+        <li><a href="#s3" data-num="03"><span class="nav-icon">📐</span>Architecture Diagram</a></li>
+        <li><a href="#s35" data-num="3½"><span class="nav-icon">🔧</span>Tech Stack Decisions</a></li>
+        <li><a href="#s375" data-num="3¾"><span class="nav-icon">🚀</span>Deployment & Lifecycle</a></li>
+      </ol>
+    </div>
+
+    <!-- Group 3: Core Concepts -->
+    <div class="nav-group" data-group="core">
+      <button class="nav-group-header" onclick="toggleNavGroup('core')">
+        <span class="nav-group-icon">⚙️</span>
+        <span class="nav-group-title">Core Concepts</span>
+        <span class="nav-group-count">5</span>
+        <span class="nav-toggle">▼</span>
+      </button>
+      <ol class="nav-group-items">
+        <li><a href="#s4" data-num="04"><span class="nav-icon">🔄</span>Loop Patterns</a></li>
+        <li><a href="#s5" data-num="05"><span class="nav-icon">✅</span>Determinism &amp; Audit</a></li>
+        <li><a href="#s6" data-num="06"><span class="nav-icon">💾</span>Memory</a></li>
+        <li><a href="#s7" data-num="07"><span class="nav-icon">🗄️</span>Databases</a></li>
+        <li><a href="#s8" data-num="08"><span class="nav-icon">📊</span>Inputs &amp; Reporting</a></li>
+      </ol>
+    </div>
+
+    <!-- Group 4: Safety & Application -->
+    <div class="nav-group" data-group="safety">
+      <button class="nav-group-header" onclick="toggleNavGroup('safety')">
+        <span class="nav-group-icon">🛡️</span>
+        <span class="nav-group-title">Safety & Application</span>
+        <span class="nav-group-count">3</span>
+        <span class="nav-toggle">▼</span>
+      </button>
+      <ol class="nav-group-items">
+        <li><a href="#s85" data-num="8½"><span class="nav-icon">🛡️</span>Safety</a></li>
+        <li><a href="#s9" data-num="09"><span class="nav-icon">🎯</span>Capstone</a></li>
+        <li><a href="#s10" data-num="10"><span class="nav-icon">⚠️</span>Pitfalls</a></li>
+      </ol>
+    </div>
+
+    <!-- Group 5: Implementation -->
+    <div class="nav-group" data-group="implementation">
+      <button class="nav-group-header" onclick="toggleNavGroup('implementation')">
+        <span class="nav-group-icon">🚀</span>
+        <span class="nav-group-title">Implementation</span>
+        <span class="nav-group-count">3</span>
+        <span class="nav-toggle">▼</span>
+      </button>
+      <ol class="nav-group-items">
+        <li><a href="#s11" data-num="11"><span class="nav-icon">💻</span>Getting Started with Claude</a></li>
+        <li><a href="#s12" data-num="12"><span class="nav-icon">💰</span>Cost Optimization</a></li>
+        <li><a href="#s13" data-num="13"><span class="nav-icon">📚</span>Tech References</a></li>
+      </ol>
+    </div>
+
+  </div>
 </aside>
 
 <main class="content">

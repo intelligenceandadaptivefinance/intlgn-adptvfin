@@ -701,3 +701,64 @@ function highlightRBACAccess(role) {
   const access = accessMap[role];
   alert(`${role.toUpperCase()} ACCESS:\n\nComponents: ${access.components.join(', ')}\n\n${access.description}`);
 }
+
+/* ========================================
+   COLLAPSIBLE NAVIGATION
+   ======================================== */
+function toggleNavGroup(groupName) {
+  const group = document.querySelector(`.nav-group[data-group="${groupName}"]`);
+  if (group) {
+    group.classList.toggle('collapsed');
+  }
+}
+
+// Auto-expand group containing current section
+document.addEventListener('DOMContentLoaded', function() {
+  // Map sections to groups
+  const groupMapping = {
+    fundamentals: ['s0', 's1', 's2'],
+    architecture: ['s3', 's35', 's375'],
+    core: ['s4', 's5', 's6', 's7', 's8'],
+    safety: ['s85', 's9', 's10'],
+    implementation: ['s11', 's12', 's13']
+  };
+  
+  // Get current section from URL hash or default to s0
+  let currentSection = window.location.hash.substring(1) || 's0';
+  
+  // Find which group contains current section
+  let currentGroup = null;
+  for (const [group, sections] of Object.entries(groupMapping)) {
+    if (sections.includes(currentSection)) {
+      currentGroup = group;
+      break;
+    }
+  }
+  
+  // Collapse all groups except the one containing current section
+  document.querySelectorAll('.nav-group').forEach(group => {
+    const groupName = group.getAttribute('data-group');
+    if (groupName !== currentGroup) {
+      group.classList.add('collapsed');
+    }
+  });
+  
+  // Mark current section as active
+  document.querySelectorAll('.nav-group-items a').forEach(link => {
+    if (link.getAttribute('href') === `#${currentSection}`) {
+      link.setAttribute('aria-current', 'page');
+    }
+  });
+  
+  // Update active section on hash change
+  window.addEventListener('hashchange', function() {
+    const newSection = window.location.hash.substring(1);
+    document.querySelectorAll('.nav-group-items a').forEach(link => {
+      if (link.getAttribute('href') === `#${newSection}`) {
+        link.setAttribute('aria-current', 'page');
+      } else {
+        link.removeAttribute('aria-current');
+      }
+    });
+  });
+});
