@@ -43,7 +43,6 @@
     <li><a href="#s3" data-num="03">Architecture Diagram</a></li>
     <li><a href="#s35" data-num="3½">Tech Stack Decisions</a></li>
     <li><a href="#s375" data-num="3¾">Deployment & Lifecycle</a></li>
-    <li><a href="#s3875" data-num="3⅞">Getting Started (Claude Code)</a></li>
     <li><a href="#s4" data-num="04">Loop Patterns</a></li>
     <li><a href="#s5" data-num="05">Determinism &amp; Audit</a></li>
     <li><a href="#s6" data-num="06">Memory</a></li>
@@ -52,8 +51,9 @@
     <li><a href="#s85" data-num="8½">Safety</a></li>
     <li><a href="#s9" data-num="09">Capstone</a></li>
     <li><a href="#s10" data-num="10">Pitfalls</a></li>
-    <li><a href="#s11" data-num="11">Cost Optimization</a></li>
-    <li><a href="#s12" data-num="12">Tech References</a></li>
+    <li><a href="#s11" data-num="11">Getting Started with Claude</a></li>
+    <li><a href="#s12" data-num="12">Cost Optimization</a></li>
+    <li><a href="#s13" data-num="13">Tech References</a></li>
   </ol>
 </aside>
 
@@ -1521,217 +1521,6 @@
     </div>
   </section>
 
-  <!-- SECTION 3.875: GETTING STARTED WITH CLAUDE CODE -->
-  <section class="section" id="s3875">
-    <div class="section-num">3⅞</div>
-    <div class="section-time">10 min</div>
-    <h2 class="section-title">Getting started with Claude Code</h2>
-    <p class="lede">You have designed the architecture. You have chosen the stack. Now: how do you actually build it? Claude Code is Anthropic's tooling for agentic development. Here is what you need to get started.</p>
-
-    <h3 class="h3">What is Claude Code?</h3>
-    <p>Claude Code is a suite of tools that let you build agents directly from your development environment — terminal, VS Code, or JetBrains. It handles the plumbing (API calls, state management, tool orchestration) so you can focus on business logic.</p>
-
-    <div class="claude-code-variants" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin: 32px 0;">
-      <div class="variant-card">
-        <div class="variant-name">Claude Code (Terminal)</div>
-        <div class="variant-desc">Command-line tool for automation and scripting</div>
-        <div class="variant-use">Best for: CI/CD, batch processing, automation</div>
-      </div>
-      <div class="variant-card">
-        <div class="variant-name">Claude Code for VS Code</div>
-        <div class="variant-desc">Extension for Microsoft Visual Studio Code</div>
-        <div class="variant-use">Best for: Development, debugging, agent building</div>
-      </div>
-      <div class="variant-card">
-        <div class="variant-name">Claude Code for JetBrains</div>
-        <div class="variant-desc">Plugin for IntelliJ, PyCharm, WebStorm</div>
-        <div class="variant-use">Best for: Teams on JetBrains IDEs</div>
-      </div>
-    </div>
-
-    <p>For this guide, we focus on <strong>Claude Code (Terminal)</strong> and <strong>VS Code extension</strong> — the most common setup for Big 4 teams starting their first agent.</p>
-
-    <h3 class="h3" style="margin-top: 48px;">System Requirements</h3>
-    <p>Before installing Claude Code, verify you have these prerequisites. These are not optional — Claude Code will not work without them.</p>
-
-    <div class="requirements-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin: 32px 0;">
-      <div class="requirement-card">
-        <div class="req-header">
-          <div class="req-icon">📦</div>
-          <div class="req-title">Node.js 18.0.0 or higher</div>
-        </div>
-        <div class="req-reason"><strong>Why:</strong> Claude Code runs on Node.js. LTS version 20.x recommended.</div>
-        <div class="req-download">
-          <strong>Download:</strong> <a href="https://nodejs.org" target="_blank" rel="noopener">nodejs.org</a><br/>
-          <strong>Windows:</strong> Download .msi installer, run with defaults<br/>
-          <strong>Mac:</strong> Download .pkg installer OR <code>brew install node</code>
-        </div>
-        <div class="req-verify">
-          <strong>Verify installation:</strong><br/>
-          <code>node --version</code> → should show v20.x.x or higher<br/>
-          <code>npm --version</code> → should show 10.x.x or higher
-        </div>
-      </div>
-
-      <div class="requirement-card">
-        <div class="req-header">
-          <div class="req-icon">💻</div>
-          <div class="req-title">Visual Studio Code (latest stable)</div>
-        </div>
-        <div class="req-reason"><strong>Why:</strong> Primary development environment for agent building.</div>
-        <div class="req-download">
-          <strong>Download:</strong> <a href="https://code.visualstudio.com" target="_blank" rel="noopener">code.visualstudio.com</a><br/>
-          <strong>Windows:</strong> Download .exe installer<br/>
-          <strong>Mac:</strong> Download .dmg OR <code>brew install --cask visual-studio-code</code>
-        </div>
-        <div class="req-verify">
-          <strong>Verify installation:</strong><br/>
-          <code>code --version</code> → should show 1.85.0 or higher
-        </div>
-      </div>
-
-      <div class="requirement-card">
-        <div class="req-header">
-          <div class="req-icon">📝</div>
-          <div class="req-title">Git 2.30 or higher</div>
-        </div>
-        <div class="req-reason"><strong>Why:</strong> Version control for agent code, prompts, and configurations.</div>
-        <div class="req-download">
-          <strong>Download:</strong> <a href="https://git-scm.com" target="_blank" rel="noopener">git-scm.com</a><br/>
-          <strong>Windows:</strong> Download installer, accept defaults<br/>
-          <strong>Mac:</strong> Included with Xcode tools OR <code>brew install git</code>
-        </div>
-        <div class="req-verify">
-          <strong>Verify installation:</strong><br/>
-          <code>git --version</code> → should show 2.30.0 or higher
-        </div>
-      </div>
-
-      <div class="requirement-card">
-        <div class="req-header">
-          <div class="req-icon">🔑</div>
-          <div class="req-title">Claude API Key</div>
-        </div>
-        <div class="req-reason"><strong>Why:</strong> Authenticates your agent's requests to Claude.</div>
-        <div class="req-download">
-          <strong>Get your key:</strong> <a href="https://console.anthropic.com" target="_blank" rel="noopener">console.anthropic.com</a><br/>
-          1. Sign in to Anthropic Console<br/>
-          2. Navigate to API Keys<br/>
-          3. Click "Create Key"<br/>
-          4. Copy key (starts with <code>sk-ant-...</code>)
-        </div>
-        <div class="req-verify">
-          <strong>Store securely:</strong><br/>
-          Never commit API keys to Git. Use environment variables:<br/>
-          <code>export ANTHROPIC_API_KEY="sk-ant-..."</code>
-        </div>
-      </div>
-    </div>
-
-    <h3 class="h3" style="margin-top: 48px;">Installation Steps</h3>
-    <p>Once you have verified all prerequisites, install Claude Code in two steps.</p>
-
-    <div class="installation-steps" style="margin: 32px 0;">
-      <div class="install-step">
-        <div class="install-step-num">Step 1</div>
-        <div class="install-step-title">Install Claude Code (Terminal)</div>
-        <div class="install-step-content">
-          <p>Open your terminal (Command Prompt on Windows, Terminal on Mac) and run:</p>
-          <div class="code-block">
-            <code>npm install -g @anthropic-ai/claude-code</code>
-          </div>
-          <p style="margin-top: 12px;">The <code>-g</code> flag installs globally, making <code>claude-code</code> available from any directory.</p>
-          <p><strong>Verify:</strong> <code>claude-code --version</code> should show the installed version.</p>
-        </div>
-      </div>
-
-      <div class="install-step">
-        <div class="install-step-num">Step 2</div>
-        <div class="install-step-title">Install Claude Code for VS Code</div>
-        <div class="install-step-content">
-          <p>Open VS Code, then:</p>
-          <ol style="margin-left: 20px; margin-top: 12px;">
-            <li>Click Extensions icon in left sidebar (or press <code>Ctrl+Shift+X</code> / <code>Cmd+Shift+X</code>)</li>
-            <li>Search for "Claude Code"</li>
-            <li>Click Install on the official Anthropic extension</li>
-            <li>Reload VS Code when prompted</li>
-          </ol>
-          <p style="margin-top: 12px;"><strong>Alternative:</strong> Install from <a href="https://marketplace.visualstudio.com/items?itemName=Anthropic.claude-code" target="_blank" rel="noopener">VS Code Marketplace</a></p>
-        </div>
-      </div>
-
-      <div class="install-step">
-        <div class="install-step-num">Step 3</div>
-        <div class="install-step-title">Configure API Key</div>
-        <div class="install-step-content">
-          <p>Set your API key as an environment variable (do this once):</p>
-          <div class="code-block">
-            <strong>Windows (PowerShell):</strong><br/>
-            <code>$env:ANTHROPIC_API_KEY="sk-ant-your-key-here"</code><br/>
-            <code>[System.Environment]::SetEnvironmentVariable('ANTHROPIC_API_KEY', 'sk-ant-your-key-here', 'User')</code>
-          </div>
-          <div class="code-block" style="margin-top: 12px;">
-            <strong>Mac/Linux (bash/zsh):</strong><br/>
-            <code>export ANTHROPIC_API_KEY="sk-ant-your-key-here"</code><br/>
-            <code>echo 'export ANTHROPIC_API_KEY="sk-ant-your-key-here"' >> ~/.bashrc</code>
-          </div>
-          <p style="margin-top: 12px;"><strong>Verify:</strong> <code>echo $ANTHROPIC_API_KEY</code> (Mac/Linux) or <code>echo $env:ANTHROPIC_API_KEY</code> (Windows)</p>
-        </div>
-      </div>
-    </div>
-
-    <h3 class="h3" style="margin-top: 48px;">Your First Agent: Hello World</h3>
-    <p>Verify everything works by running a simple agent from the terminal.</p>
-
-    <div class="example-card" style="margin: 32px 0;">
-      <div class="example-tag">Quick Test</div>
-      <div class="code-block">
-        <code>claude-code run "What is 245 × 137?"</code>
-      </div>
-      <p style="margin-top: 16px;"><strong>Expected output:</strong> Claude responds with the calculation result (33,565). This confirms:</p>
-      <ul style="margin-left: 20px; margin-top: 8px;">
-        <li>✓ Node.js is installed correctly</li>
-        <li>✓ Claude Code CLI is installed</li>
-        <li>✓ API key is configured</li>
-        <li>✓ You can make requests to Claude API</li>
-      </ul>
-    </div>
-
-    <h3 class="h3" style="margin-top: 48px;">Next Steps</h3>
-    <p>You now have a working Claude Code environment. From here:</p>
-
-    <div class="next-steps-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin: 32px 0;">
-      <div class="next-step-card">
-        <div class="next-step-title">📚 Read the Documentation</div>
-        <div class="next-step-desc">Complete guides for building agents, tool use, and deployment</div>
-        <div class="next-step-link"><a href="https://docs.anthropic.com/claude-code" target="_blank" rel="noopener">docs.anthropic.com/claude-code</a></div>
-      </div>
-
-      <div class="next-step-card">
-        <div class="next-step-title">🔧 Build a Simple Agent</div>
-        <div class="next-step-desc">Start with Section 4 (Loop Patterns) to understand orchestration choices</div>
-        <div class="next-step-link">Continue to <a href="#s4">Section 4: Loop Patterns</a></div>
-      </div>
-
-      <div class="next-step-card">
-        <div class="next-step-title">💰 Monitor Usage</div>
-        <div class="next-step-desc">Track token usage and costs in real-time</div>
-        <div class="next-step-link"><a href="https://console.anthropic.com/usage" target="_blank" rel="noopener">console.anthropic.com/usage</a></div>
-      </div>
-
-      <div class="next-step-card">
-        <div class="next-step-title">📖 Example Projects</div>
-        <div class="next-step-desc">See working agent code for common finance use cases</div>
-        <div class="next-step-link"><a href="https://github.com/anthropics/claude-code-examples" target="_blank" rel="noopener">github.com/anthropics/claude-code-examples</a></div>
-      </div>
-    </div>
-
-    <div class="callout" style="margin-top: 48px;">
-      <div class="callout-label">Platform Note</div>
-      <p>This guide covers Windows and Mac setup. Linux users can follow the Mac instructions, substituting <code>apt</code> or <code>yum</code> for package management. For JetBrains IDE setup (IntelliJ, PyCharm), visit <a href="https://plugins.jetbrains.com/plugin/claude-code" target="_blank" rel="noopener">plugins.jetbrains.com/plugin/claude-code</a>.</p>
-    </div>
-  </section>
-
   <!-- SECTION 4: LOOP PATTERNS -->
   <section class="section" id="s4">
     <div class="section-num">04</div>
@@ -2384,9 +2173,220 @@
     <p class="closing">You now have the vocabulary, the patterns, the constraints, and a one-page scoped use case. The hard part starts now: pick the smallest version of your idea, build it with HITL on every state change, log everything, and earn the right to remove gates one at a time. <em>Good luck.</em></p>
   </section>
 
-  <!-- SECTION 11: COST OPTIMIZATION & MODEL SELECTION -->
+  <!-- SECTION 11: GETTING STARTED WITH CLAUDE -->
   <section class="section" id="s11">
     <div class="section-num">11</div>
+    <div class="section-time">10 min</div>
+    <h2 class="section-title">Getting started with Claude</h2>
+    <p class="lede">You have designed the architecture, chosen the stack, and scoped your use case. Now: how do you actually build it? This section covers the tools and setup you need to start building agents with Claude.</p>
+
+    <h3 class="h3">What is Claude Code?</h3>
+    <p>Claude Code is a suite of tools that let you build agents directly from your development environment — terminal, VS Code, or JetBrains. It handles the plumbing (API calls, state management, tool orchestration) so you can focus on business logic.</p>
+
+    <div class="claude-code-variants" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin: 32px 0;">
+      <div class="variant-card">
+        <div class="variant-name">Claude Code (Terminal)</div>
+        <div class="variant-desc">Command-line tool for automation and scripting</div>
+        <div class="variant-use">Best for: CI/CD, batch processing, automation</div>
+      </div>
+      <div class="variant-card">
+        <div class="variant-name">Claude Code for VS Code</div>
+        <div class="variant-desc">Extension for Microsoft Visual Studio Code</div>
+        <div class="variant-use">Best for: Development, debugging, agent building</div>
+      </div>
+      <div class="variant-card">
+        <div class="variant-name">Claude Code for JetBrains</div>
+        <div class="variant-desc">Plugin for IntelliJ, PyCharm, WebStorm</div>
+        <div class="variant-use">Best for: Teams on JetBrains IDEs</div>
+      </div>
+    </div>
+
+    <p>For this guide, we focus on <strong>Claude Code (Terminal)</strong> and <strong>VS Code extension</strong> — the most common setup for Big 4 teams starting their first agent.</p>
+
+    <h3 class="h3" style="margin-top: 48px;">System Requirements</h3>
+    <p>Before installing Claude Code, verify you have these prerequisites. These are not optional — Claude Code will not work without them.</p>
+
+    <div class="requirements-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin: 32px 0;">
+      <div class="requirement-card">
+        <div class="req-header">
+          <div class="req-icon">📦</div>
+          <div class="req-title">Node.js 18.0.0 or higher</div>
+        </div>
+        <div class="req-reason"><strong>Why:</strong> Claude Code runs on Node.js. LTS version 20.x recommended.</div>
+        <div class="req-download">
+          <strong>Download:</strong> <a href="https://nodejs.org" target="_blank" rel="noopener">nodejs.org</a><br/>
+          <strong>Windows:</strong> Download .msi installer, run with defaults<br/>
+          <strong>Mac:</strong> Download .pkg installer OR <code>brew install node</code>
+        </div>
+        <div class="req-verify">
+          <strong>Verify installation:</strong><br/>
+          <code>node --version</code> → should show v20.x.x or higher<br/>
+          <code>npm --version</code> → should show 10.x.x or higher
+        </div>
+      </div>
+
+      <div class="requirement-card">
+        <div class="req-header">
+          <div class="req-icon">💻</div>
+          <div class="req-title">Visual Studio Code (latest stable)</div>
+        </div>
+        <div class="req-reason"><strong>Why:</strong> Primary development environment for agent building.</div>
+        <div class="req-download">
+          <strong>Download:</strong> <a href="https://code.visualstudio.com" target="_blank" rel="noopener">code.visualstudio.com</a><br/>
+          <strong>Windows:</strong> Download .exe installer<br/>
+          <strong>Mac:</strong> Download .dmg OR <code>brew install --cask visual-studio-code</code>
+        </div>
+        <div class="req-verify">
+          <strong>Verify installation:</strong><br/>
+          <code>code --version</code> → should show 1.85.0 or higher
+        </div>
+      </div>
+
+      <div class="requirement-card">
+        <div class="req-header">
+          <div class="req-icon">📝</div>
+          <div class="req-title">Git 2.30 or higher</div>
+        </div>
+        <div class="req-reason"><strong>Why:</strong> Version control for agent code, prompts, and configurations.</div>
+        <div class="req-download">
+          <strong>Download:</strong> <a href="https://git-scm.com" target="_blank" rel="noopener">git-scm.com</a><br/>
+          <strong>Windows:</strong> Download installer, accept defaults<br/>
+          <strong>Mac:</strong> Included with Xcode tools OR <code>brew install git</code>
+        </div>
+        <div class="req-verify">
+          <strong>Verify installation:</strong><br/>
+          <code>git --version</code> → should show 2.30.0 or higher
+        </div>
+      </div>
+
+      <div class="requirement-card">
+        <div class="req-header">
+          <div class="req-icon">🔑</div>
+          <div class="req-title">Claude API Key</div>
+        </div>
+        <div class="req-reason"><strong>Why:</strong> Authenticates your agent's requests to Claude.</div>
+        <div class="req-download">
+          <strong>Get your key:</strong> <a href="https://console.anthropic.com" target="_blank" rel="noopener">console.anthropic.com</a><br/>
+          1. Sign in to Anthropic Console<br/>
+          2. Navigate to API Keys<br/>
+          3. Click "Create Key"<br/>
+          4. Copy key (starts with <code>sk-ant-...</code>)
+        </div>
+        <div class="req-verify">
+          <strong>Store securely:</strong><br/>
+          Never commit API keys to Git. Use environment variables:<br/>
+          <code>export ANTHROPIC_API_KEY="sk-ant-..."</code>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="h3" style="margin-top: 48px;">Installation Steps</h3>
+    <p>Once you have verified all prerequisites, install Claude Code in two steps.</p>
+
+    <div class="installation-steps" style="margin: 32px 0;">
+      <div class="install-step">
+        <div class="install-step-num">Step 1</div>
+        <div class="install-step-title">Install Claude Code (Terminal)</div>
+        <div class="install-step-content">
+          <p>Open your terminal (Command Prompt on Windows, Terminal on Mac) and run:</p>
+          <div class="code-block">
+            <code>npm install -g @anthropic-ai/claude-code</code>
+          </div>
+          <p style="margin-top: 12px;">The <code>-g</code> flag installs globally, making <code>claude-code</code> available from any directory.</p>
+          <p><strong>Verify:</strong> <code>claude-code --version</code> should show the installed version.</p>
+        </div>
+      </div>
+
+      <div class="install-step">
+        <div class="install-step-num">Step 2</div>
+        <div class="install-step-title">Install Claude Code for VS Code</div>
+        <div class="install-step-content">
+          <p>Open VS Code, then:</p>
+          <ol style="margin-left: 20px; margin-top: 12px;">
+            <li>Click Extensions icon in left sidebar (or press <code>Ctrl+Shift+X</code> / <code>Cmd+Shift+X</code>)</li>
+            <li>Search for "Claude Code"</li>
+            <li>Click Install on the official Anthropic extension</li>
+            <li>Reload VS Code when prompted</li>
+          </ol>
+          <p style="margin-top: 12px;"><strong>Alternative:</strong> Install from <a href="https://marketplace.visualstudio.com/items?itemName=Anthropic.claude-code" target="_blank" rel="noopener">VS Code Marketplace</a></p>
+        </div>
+      </div>
+
+      <div class="install-step">
+        <div class="install-step-num">Step 3</div>
+        <div class="install-step-title">Configure API Key</div>
+        <div class="install-step-content">
+          <p>Set your API key as an environment variable (do this once):</p>
+          <div class="code-block">
+            <strong>Windows (PowerShell):</strong><br/>
+            <code>$env:ANTHROPIC_API_KEY="sk-ant-your-key-here"</code><br/>
+            <code>[System.Environment]::SetEnvironmentVariable('ANTHROPIC_API_KEY', 'sk-ant-your-key-here', 'User')</code>
+          </div>
+          <div class="code-block" style="margin-top: 12px;">
+            <strong>Mac/Linux (bash/zsh):</strong><br/>
+            <code>export ANTHROPIC_API_KEY="sk-ant-your-key-here"</code><br/>
+            <code>echo 'export ANTHROPIC_API_KEY="sk-ant-your-key-here"' >> ~/.bashrc</code>
+          </div>
+          <p style="margin-top: 12px;"><strong>Verify:</strong> <code>echo $ANTHROPIC_API_KEY</code> (Mac/Linux) or <code>echo $env:ANTHROPIC_API_KEY</code> (Windows)</p>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="h3" style="margin-top: 48px;">Your First Agent: Hello World</h3>
+    <p>Verify everything works by running a simple agent from the terminal.</p>
+
+    <div class="example-card" style="margin: 32px 0;">
+      <div class="example-tag">Quick Test</div>
+      <div class="code-block">
+        <code>claude-code run "What is 245 × 137?"</code>
+      </div>
+      <p style="margin-top: 16px;"><strong>Expected output:</strong> Claude responds with the calculation result (33,565). This confirms:</p>
+      <ul style="margin-left: 20px; margin-top: 8px;">
+        <li>✓ Node.js is installed correctly</li>
+        <li>✓ Claude Code CLI is installed</li>
+        <li>✓ API key is configured</li>
+        <li>✓ You can make requests to Claude API</li>
+      </ul>
+    </div>
+
+    <h3 class="h3" style="margin-top: 48px;">Next Steps</h3>
+    <p>You now have a working Claude Code environment. From here:</p>
+
+    <div class="next-steps-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin: 32px 0;">
+      <div class="next-step-card">
+        <div class="next-step-title">📚 Read the Documentation</div>
+        <div class="next-step-desc">Complete guides for building agents, tool use, and deployment</div>
+        <div class="next-step-link"><a href="https://docs.anthropic.com/claude-code" target="_blank" rel="noopener">docs.anthropic.com/claude-code</a></div>
+      </div>
+
+      <div class="next-step-card">
+        <div class="next-step-title">🔧 Build a Simple Agent</div>
+        <div class="next-step-desc">Start with Section 4 (Loop Patterns) to understand orchestration choices</div>
+        <div class="next-step-link">Continue to <a href="#s4">Section 4: Loop Patterns</a></div>
+      </div>
+
+      <div class="next-step-card">
+        <div class="next-step-title">💰 Monitor Usage</div>
+        <div class="next-step-desc">Track token usage and costs in real-time</div>
+        <div class="next-step-link"><a href="https://console.anthropic.com/usage" target="_blank" rel="noopener">console.anthropic.com/usage</a></div>
+      </div>
+
+      <div class="next-step-card">
+        <div class="next-step-title">📖 Example Projects</div>
+        <div class="next-step-desc">See working agent code for common finance use cases</div>
+        <div class="next-step-link"><a href="https://github.com/anthropics/claude-code-examples" target="_blank" rel="noopener">github.com/anthropics/claude-code-examples</a></div>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top: 48px;">
+      <div class="callout-label">Platform Note</div>
+      <p>This guide covers Windows and Mac setup. Linux users can follow the Mac instructions, substituting <code>apt</code> or <code>yum</code> for package management. For JetBrains IDE setup (IntelliJ, PyCharm), visit <a href="https://plugins.jetbrains.com/plugin/claude-code" target="_blank" rel="noopener">plugins.jetbrains.com/plugin/claude-code</a>.</p>
+    </div>
+  </section>
+
+  <!-- SECTION 12: COST OPTIMIZATION & MODEL SELECTION -->
+  <section class="section" id="s12">
+    <div class="section-num">12</div>
     <div class="section-time">15 min</div>
     <h2 class="section-title">Cost optimization & model selection</h2>
     <p class="lede">Building an agent is one budget line. Running it is another. Token costs, API fees, and infrastructure add up. This section shows you how to choose the right Claude model for each task and reduce token usage by 60-90% through architecture and prompt design.</p>
@@ -2728,9 +2728,9 @@
     </div>
   </section>
 
-  <!-- SECTION 12: TECHNOLOGY STACK REFERENCES -->
-  <section class="section" id="s12">
-    <div class="section-num">12</div>
+  <!-- SECTION 13: TECHNOLOGY STACK REFERENCES -->
+  <section class="section" id="s13">
+    <div class="section-num">13</div>
     <div class="section-time">5 min</div>
     <h2 class="section-title">Technology stack references</h2>
     <p class="lede">Every technology mentioned in this course, organized by architecture layer, with official websites and documentation links. Bookmark this page — you will return to it.</p>
