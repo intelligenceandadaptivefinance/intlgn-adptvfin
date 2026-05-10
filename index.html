@@ -2453,160 +2453,578 @@
     <p class="lede">Building an agent is one budget line. Running it is another. Token costs, API fees, and infrastructure add up. This section shows you how to choose the right Claude model for each task and reduce token usage by 60-90% through architecture and prompt design.</p>
 
     <h3 class="h3">Part 1: Choosing the Right Claude Model</h3>
-    <p>Claude comes in three tiers. Each has different capabilities, speeds, and costs. Picking the wrong model wastes money or compromises quality. Here is how to decide.</p>
+    <p>Claude comes in three tiers — Haiku 4.5, Sonnet 4.6, and Opus 4.7. Each has different capabilities, speeds, and costs. Picking the wrong model wastes money or compromises quality. Here is how to decide.</p>
 
-    <div class="model-comparison" style="margin: 32px 0;">
-      <table class="decision-table">
+    <!-- DECISION FLOWCHART -->
+    <div class="model-decision-flowchart" style="background: var(--paper-warm); border: 1px solid var(--slate-200); border-radius: 8px; padding: 40px; margin: 40px 0;">
+      <h4 style="font-family: var(--serif); font-weight: 600; font-size: 22px; color: var(--navy); margin: 0 0 32px 0; text-align: center;">Model Selection Decision Flow</h4>
+      
+      <div style="display: flex; flex-direction: column; gap: 24px; max-width: 800px; margin: 0 auto;">
+        
+        <!-- Question 1 -->
+        <div style="background: white; border-left: 4px solid var(--amber); padding: 24px; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
+          <div style="font-family: var(--mono); font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--amber); margin-bottom: 12px;">STEP 1</div>
+          <div style="font-weight: 600; font-size: 18px; color: var(--ink); margin-bottom: 16px;">Need balanced power for daily work?</div>
+          <div style="display: flex; gap: 12px; align-items: center;">
+            <div style="flex: 1; padding: 16px; background: #E8F4F1; border-radius: 4px; border: 2px solid #2E6B3C;">
+              <div style="font-weight: 600; color: #2E6B3C; margin-bottom: 4px;">✓ YES</div>
+              <div style="font-size: 14px; color: var(--ink-soft);">→ Use <strong>Sonnet 4.6</strong></div>
+            </div>
+            <div style="flex: 1; padding: 16px; background: var(--slate-100); border-radius: 4px;">
+              <div style="font-weight: 600; color: var(--slate-500); margin-bottom: 4px;">✗ NO</div>
+              <div style="font-size: 14px; color: var(--ink-soft);">Continue to Step 2 ↓</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Question 2 -->
+        <div style="background: white; border-left: 4px solid var(--amber); padding: 24px; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
+          <div style="font-family: var(--mono); font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--amber); margin-bottom: 12px;">STEP 2</div>
+          <div style="font-weight: 600; font-size: 18px; color: var(--ink); margin-bottom: 16px;">Need lowest cost at scale?</div>
+          <div style="display: flex; gap: 12px; align-items: center;">
+            <div style="flex: 1; padding: 16px; background: #E8F4F1; border-radius: 4px; border: 2px solid #2E6B3C;">
+              <div style="font-weight: 600; color: #2E6B3C; margin-bottom: 4px;">✓ YES</div>
+              <div style="font-size: 14px; color: var(--ink-soft);">→ Use <strong>Haiku 4.5</strong></div>
+            </div>
+            <div style="flex: 1; padding: 16px; background: var(--slate-100); border-radius: 4px;">
+              <div style="font-weight: 600; color: var(--slate-500); margin-bottom: 4px;">✗ NO</div>
+              <div style="font-size: 14px; color: var(--ink-soft);">Continue to Step 3 ↓</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Question 3 -->
+        <div style="background: white; border-left: 4px solid var(--amber); padding: 24px; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
+          <div style="font-family: var(--mono); font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--amber); margin-bottom: 12px;">STEP 3</div>
+          <div style="font-weight: 600; font-size: 18px; color: var(--ink); margin-bottom: 16px;">Does the task require complex reasoning or autonomous coding?</div>
+          <div style="display: flex; gap: 12px; align-items: center;">
+            <div style="flex: 1; padding: 16px; background: #E8F4F1; border-radius: 4px; border: 2px solid #2E6B3C;">
+              <div style="font-weight: 600; color: #2E6B3C; margin-bottom: 4px;">✓ YES</div>
+              <div style="font-size: 14px; color: var(--ink-soft);">→ Use <strong>Opus 4.7</strong></div>
+            </div>
+            <div style="flex: 1; padding: 16px; background: var(--paper-warm); border-radius: 4px; border: 1px solid var(--amber);">
+              <div style="font-weight: 600; color: var(--amber); margin-bottom: 4px;">⚠ UNCLEAR</div>
+              <div style="font-size: 14px; color: var(--ink-soft);">Default to Sonnet 4.6</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- COMPREHENSIVE MODEL COMPARISON TABLE -->
+    <h3 class="h3" style="margin-top: 64px;">Complete Model Comparison</h3>
+    <p>Side-by-side specifications for all three Claude 4 models. Context window, speed, cost, and best-use scenarios.</p>
+
+    <div class="model-comparison" style="margin: 32px 0; overflow-x: auto;">
+      <table class="decision-table" style="width: 100%; min-width: 900px;">
         <thead>
           <tr>
-            <th>Model</th>
-            <th>Cost (Input / Output)</th>
-            <th>Best For</th>
-            <th>Speed</th>
-            <th>Context Window</th>
+            <th style="width: 15%;">Criterion</th>
+            <th style="width: 28%;">Haiku 4.5</th>
+            <th style="width: 28%;">Sonnet 4.6</th>
+            <th style="width: 29%;">Opus 4.7</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td><strong>Claude Haiku</strong><br/><span class="tech-tag">Fastest</span></td>
-            <td>$0.25 / $1.25 per million tokens<br/>₹20 / ₹100 per million tokens</td>
-            <td>Simple classification, routing, data extraction, high-volume tasks</td>
-            <td>⚡⚡⚡ Sub-second</td>
-            <td>200K tokens</td>
+            <td><strong>Description</strong></td>
+            <td>The fastest model with near-frontier intelligence</td>
+            <td>Best combination of speed and intelligence</td>
+            <td>Most capable model for complex reasoning and agentic coding</td>
           </tr>
           <tr>
-            <td><strong>Claude Sonnet</strong><br/><span class="tech-tag">Balanced</span></td>
-            <td>$3 / $15 per million tokens<br/>₹240 / ₹1,200 per million tokens</td>
-            <td>General reasoning, analysis, drafting, most production tasks</td>
-            <td>⚡⚡ Fast</td>
-            <td>200K tokens</td>
+            <td><strong>Context Window</strong></td>
+            <td><span style="background: var(--amber-pale); padding: 4px 8px; border-radius: 4px; font-weight: 600;">200K tokens</span></td>
+            <td><span style="background: #E8F4F1; padding: 4px 8px; border-radius: 4px; font-weight: 600; color: #2E6B3C;">1M tokens</span></td>
+            <td><span style="background: #E8F4F1; padding: 4px 8px; border-radius: 4px; font-weight: 600; color: #2E6B3C;">1M tokens</span></td>
           </tr>
           <tr>
-            <td><strong>Claude Opus</strong><br/><span class="tech-tag">Most capable</span></td>
-            <td>$15 / $75 per million tokens<br/>₹1,200 / ₹6,000 per million tokens</td>
-            <td>Complex multi-step reasoning, high-stakes decisions, deep analysis</td>
-            <td>⚡ Moderate</td>
-            <td>200K tokens</td>
+            <td><strong>Speed</strong></td>
+            <td>⚡⚡⚡⚡⚡ Fastest<br/><span style="font-size: 13px; color: var(--slate-500);">Sub-second responses</span></td>
+            <td>⚡⚡⚡⚡ Fast<br/><span style="font-size: 13px; color: var(--slate-500);">Rapid production use</span></td>
+            <td>⚡⚡ Moderate<br/><span style="font-size: 13px; color: var(--slate-500);">Deliberate reasoning</span></td>
+          </tr>
+          <tr>
+            <td><strong>Cost (Input / Output)</strong></td>
+            <td><strong>$1 / $5</strong> per MTok<br/>₹80 / ₹400 per MTok<br/><span class="tech-tag" style="background: var(--green-ok); color: white;">Lowest cost</span></td>
+            <td><strong>$3 / $15</strong> per MTok<br/>₹240 / ₹1,200 per MTok<br/><span class="tech-tag" style="background: var(--amber); color: white;">Moderate cost</span></td>
+            <td><strong>$5 / $25</strong> per MTok<br/>₹400 / ₹2,000 per MTok<br/><span class="tech-tag" style="background: var(--red-no); color: white;">Premium cost</span></td>
+          </tr>
+          <tr>
+            <td><strong>Max Output</strong></td>
+            <td>64K tokens</td>
+            <td>64K tokens</td>
+            <td>128K tokens</td>
+          </tr>
+          <tr>
+            <td><strong>Best For</strong></td>
+            <td>
+              • High-volume operations<br/>
+              • Transaction classification<br/>
+              • Data extraction at scale<br/>
+              • Real-time chat support<br/>
+              • Simple summarization
+            </td>
+            <td>
+              • General professional workflows<br/>
+              • Document analysis<br/>
+              • Compliance drafting<br/>
+              • Support agent automation<br/>
+              • Most production use cases
+            </td>
+            <td>
+              • Complex financial modeling<br/>
+              • Deep research synthesis<br/>
+              • Autonomous coding agents<br/>
+              • Multi-step reasoning tasks<br/>
+              • High-stakes decisions
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Thinking Style</strong></td>
+            <td>Lightweight<br/><span style="font-size: 13px; color: var(--slate-500);">Fast, pattern-based</span></td>
+            <td>Balanced<br/><span style="font-size: 13px; color: var(--slate-500);">Reasoning + speed</span></td>
+            <td>Deep reasoning<br/><span style="font-size: 13px; color: var(--slate-500);">Multi-step analysis</span></td>
+          </tr>
+          <tr>
+            <td><strong>Extended Thinking</strong></td>
+            <td>✓ Yes</td>
+            <td>✓ Yes</td>
+            <td>✗ No (uses adaptive thinking)</td>
           </tr>
         </tbody>
       </table>
     </div>
 
-    <h3 class="h3" style="margin-top: 48px;">Decision Matrix: Task → Model</h3>
-    <p>Map your use case to model tier using these characteristics. If multiple apply, choose the most conservative (higher-capability model).</p>
+    <!-- FINANCE-SPECIFIC USE CASES -->
+    <h3 class="h3" style="margin-top: 64px;">Finance Workflow Scenarios: Which Model for Each Task?</h3>
+    <p>Real finance workflows mapped to the right model tier. These scenarios cover planning, reporting, reconciliation, analysis, compliance, and automation across the financial close cycle.</p>
 
-    <div class="decision-matrix-cost" style="margin: 32px 0;">
-      <table class="decision-table">
+    <div style="display: grid; grid-template-columns: 1fr; gap: 20px; margin: 32px 0;">
+      
+      <!-- HAIKU SCENARIOS -->
+      <div style="border: 2px solid var(--green-ok); border-radius: 8px; overflow: hidden;">
+        <div style="background: var(--green-ok); color: white; padding: 16px 20px; font-weight: 600; font-size: 18px;">
+          ⚡ Haiku 4.5 — High-Volume, Low-Complexity Tasks
+        </div>
+        <div style="padding: 24px; background: white;">
+          <div style="display: grid; gap: 16px;">
+            
+            <div>
+              <div style="font-weight: 600; color: var(--ink); margin-bottom: 6px;">📊 Data Processing & Classification</div>
+              <ul style="margin: 8px 0 0 20px; color: var(--ink-soft); font-size: 15px; line-height: 1.6;">
+                <li>Process thousands of invoices daily (classify, extract vendor, amount, GL code)</li>
+                <li>Categorize 10,000+ bank transactions per month into expense categories</li>
+                <li>Flag duplicate payments or suspicious transactions at scale</li>
+                <li>Extract key fields from purchase orders, receipts, contracts</li>
+              </ul>
+            </div>
+
+            <div>
+              <div style="font-weight: 600; color: var(--ink); margin-bottom: 6px;">📝 Reporting & Summarization</div>
+              <ul style="margin: 8px 0 0 20px; color: var(--ink-soft); font-size: 15px; line-height: 1.6;">
+                <li>Generate 100+ daily flash reports (revenue, burn rate, cash position)</li>
+                <li>Summarize earnings call transcripts for investor updates</li>
+                <li>Create weekly variance summaries (actuals vs budget, simple commentary)</li>
+                <li>Produce automated payment reminders and dunning notices</li>
+              </ul>
+            </div>
+
+            <div>
+              <div style="font-weight: 600; color: var(--ink); margin-bottom: 6px;">💬 Real-Time Support</div>
+              <ul style="margin: 8px 0 0 20px; color: var(--ink-soft); font-size: 15px; line-height: 1.6;">
+                <li>Chat support for employees asking "Where's my expense reimbursement?"</li>
+                <li>Answer policy questions from finance policy documents (cached)</li>
+                <li>Route vendor queries to the right department</li>
+              </ul>
+            </div>
+
+            <div style="background: var(--paper-warm); padding: 16px; border-radius: 6px; margin-top: 8px;">
+              <div style="font-weight: 600; margin-bottom: 8px; color: var(--ink);">💰 Cost Example:</div>
+              <div style="font-size: 15px; color: var(--ink-soft);">
+                <strong>Scenario:</strong> Classify 10,000 invoices/month. Each requires 500 input tokens + 100 output tokens.<br/>
+                <strong>Monthly cost:</strong> (10K × 500 × $1/M) + (10K × 100 × $5/M) = <span style="color: var(--green-ok); font-weight: 600;">$10</span> (₹800)<br/>
+                <strong>vs Opus 4.7:</strong> Would cost <span style="text-decoration: line-through;">$50</span> → <strong>Haiku saves 80%</strong>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- SONNET SCENARIOS -->
+      <div style="border: 2px solid var(--amber); border-radius: 8px; overflow: hidden;">
+        <div style="background: var(--amber); color: white; padding: 16px 20px; font-weight: 600; font-size: 18px;">
+          ⚙️ Sonnet 4.6 — Balanced Intelligence for Professional Workflows
+        </div>
+        <div style="padding: 24px; background: white;">
+          <div style="display: grid; gap: 16px;">
+            
+            <div>
+              <div style="font-weight: 600; color: var(--ink); margin-bottom: 6px;">📋 Planning & Forecasting</div>
+              <ul style="margin: 8px 0 0 20px; color: var(--ink-soft); font-size: 15px; line-height: 1.6;">
+                <li>Draft annual budgets with department-level assumptions and justifications</li>
+                <li>Generate quarterly revenue forecasts based on pipeline and historical trends</li>
+                <li>Create scenario analysis (best/base/worst case) for board presentations</li>
+                <li>Build 3-year operating plans with headcount and capex planning</li>
+              </ul>
+            </div>
+
+            <div>
+              <div style="font-weight: 600; color: var(--ink); margin-bottom: 6px;">📊 Reporting & Analysis</div>
+              <ul style="margin: 8px 0 0 20px; color: var(--ink-soft); font-size: 15px; line-height: 1.6;">
+                <li>Analyze 10-Ks and research reports (multi-page documents)</li>
+                <li>Prepare monthly board decks with narrative, charts, and variance analysis</li>
+                <li>Synthesize audit findings into management letter responses</li>
+                <li>Draft MD&A (Management Discussion & Analysis) sections for financials</li>
+              </ul>
+            </div>
+
+            <div>
+              <div style="font-weight: 600; color: var(--ink); margin-bottom: 6px;">✅ Reconciliation & Controls</div>
+              <ul style="margin: 8px 0 0 20px; color: var(--ink-soft); font-size: 15px; line-height: 1.6;">
+                <li>Bank reconciliation with intelligent matching of deposits/withdrawals</li>
+                <li>Intercompany reconciliation across entities (identify mismatches)</li>
+                <li>Tie-out balance sheet accounts to subledgers</li>
+                <li>Flag unusual journal entries for controller review</li>
+              </ul>
+            </div>
+
+            <div>
+              <div style="font-weight: 600; color: var(--ink); margin-bottom: 6px;">📝 Compliance & Documentation</div>
+              <ul style="margin: 8px 0 0 20px; color: var(--ink-soft); font-size: 15px; line-height: 1.6;">
+                <li>Draft SOX control narratives and test walkthroughs</li>
+                <li>Generate compliance memos (revenue recognition, lease accounting)</li>
+                <li>Prepare footnote disclosures for financial statements</li>
+                <li>Create accounting policy documentation for new transactions</li>
+              </ul>
+            </div>
+
+            <div>
+              <div style="font-weight: 600; color: var(--ink); margin-bottom: 6px;">🤖 Workflow Automation</div>
+              <ul style="margin: 8px 0 0 20px; color: var(--ink-soft); font-size: 15px; line-height: 1.6;">
+                <li>Support agent for finance team (answers GL questions, routing tasks)</li>
+                <li>Automated close checklist management with reminders</li>
+                <li>Smart approval routing based on thresholds and policies</li>
+              </ul>
+            </div>
+
+            <div style="background: var(--paper-warm); padding: 16px; border-radius: 6px; margin-top: 8px;">
+              <div style="font-weight: 600; margin-bottom: 8px; color: var(--ink);">💰 Cost Example:</div>
+              <div style="font-size: 15px; color: var(--ink-soft);">
+                <strong>Scenario:</strong> Draft 50 compliance memos/month. Each requires 1,500 input + 800 output tokens.<br/>
+                <strong>Monthly cost:</strong> (50 × 1,500 × $3/M) + (50 × 800 × $15/M) = <span style="color: var(--amber); font-weight: 600;">$0.83</span> (₹66)<br/>
+                <strong>Why Sonnet?</strong> Haiku lacks reasoning depth; Opus overkill for reviewed drafts.
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- OPUS SCENARIOS -->
+      <div style="border: 2px solid var(--navy); border-radius: 8px; overflow: hidden;">
+        <div style="background: var(--navy); color: white; padding: 16px 20px; font-weight: 600; font-size: 18px;">
+          🧠 Opus 4.7 — Complex Reasoning & Long-Horizon Tasks
+        </div>
+        <div style="padding: 24px; background: white;">
+          <div style="display: grid; gap: 16px;">
+            
+            <div>
+              <div style="font-weight: 600; color: var(--ink); margin-bottom: 6px;">🔍 Deep Research & Analysis</div>
+              <ul style="margin: 8px 0 0 20px; color: var(--ink-soft); font-size: 15px; line-height: 1.6;">
+                <li>Synthesize 100+ research reports into investment thesis (requires 1M context)</li>
+                <li>Analyze complex M&A models with multi-scenario DCF valuations</li>
+                <li>Deep-dive industry research combining 10-Ks, transcripts, and market data</li>
+                <li>Forensic accounting analysis of suspicious transactions across entities</li>
+              </ul>
+            </div>
+
+            <div>
+              <div style="font-weight: 600; color: var(--ink); margin-bottom: 6px;">💻 Autonomous Coding Agents</div>
+              <ul style="margin: 8px 0 0 20px; color: var(--ink-soft); font-size: 15px; line-height: 1.6;">
+                <li>Build financial models in Python (DCF, LBO, merger model) with full documentation</li>
+                <li>Create custom reconciliation tools that match across multiple systems</li>
+                <li>Automate complex GL close workflows with error handling and logging</li>
+                <li>Generate SQL queries for multi-table joins with business logic validation</li>
+              </ul>
+            </div>
+
+            <div>
+              <div style="font-weight: 600; color: var(--ink); margin-bottom: 6px;">📊 Strategic Planning</div>
+              <ul style="margin: 8px 0 0 20px; color: var(--ink-soft); font-size: 15px; line-height: 1.6;">
+                <li>Long-range financial planning (5-year strategic plan with assumptions)</li>
+                <li>Capital allocation framework with NPV analysis across 20+ projects</li>
+                <li>Tax optimization analysis across jurisdictions with code interpretation</li>
+                <li>Complex hedge accounting documentation (ASC 815 compliance)</li>
+              </ul>
+            </div>
+
+            <div>
+              <div style="font-weight: 600; color: var(--ink); margin-bottom: 6px;">⚖️ High-Stakes Decisions</div>
+              <ul style="margin: 8px 0 0 20px; color: var(--ink-soft); font-size: 15px; line-height: 1.6;">
+                <li>Audit-critical GL reconciliations where errors trigger material weaknesses</li>
+                <li>Revenue recognition memos for non-standard contracts (ASC 606 judgments)</li>
+                <li>Impairment testing documentation requiring multi-step reasoning</li>
+                <li>Technical accounting research (FASB/IFRS interpretation)</li>
+              </ul>
+            </div>
+
+            <div style="background: var(--paper-warm); padding: 16px; border-radius: 6px; margin-top: 8px;">
+              <div style="font-weight: 600; margin-bottom: 8px; color: var(--ink);">💰 Cost Example:</div>
+              <div style="font-size: 15px; color: var(--ink-soft);">
+                <strong>Scenario:</strong> Build 5 custom reconciliation tools/quarter. Each requires 4,000 input + 3,000 output tokens (coding agent).<br/>
+                <strong>Quarterly cost:</strong> (5 × 4,000 × $5/M) + (5 × 3,000 × $25/M) = <span style="color: var(--navy); font-weight: 600;">$0.48</span> (₹38)<br/>
+                <strong>Why Opus?</strong> Complex multi-file coding requires deep reasoning. Low volume = affordable premium.
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- DECISION MATRIX -->
+    <h3 class="h3" style="margin-top: 64px;">Decision Matrix: Task Characteristics → Model</h3>
+    <p>Map your use case to model tier using these characteristics. If multiple models could work, choose based on volume (high → Haiku), criticality (high → Opus), or balance (Sonnet).</p>
+
+    <div class="decision-matrix-cost" style="margin: 32px 0; overflow-x: auto;">
+      <table class="decision-table" style="width: 100%; min-width: 900px;">
         <thead>
           <tr>
-            <th>Task Type</th>
+            <th>Finance Task</th>
             <th>Reasoning Complexity</th>
             <th>Criticality</th>
             <th>Volume</th>
+            <th>Context Needs</th>
             <th>Recommended Model</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>Invoice classification</td>
+            <td><strong>Invoice classification</strong></td>
             <td>Low (pattern matching)</td>
             <td>Low (can review errors)</td>
-            <td>High (1,000+ per month)</td>
-            <td><strong>Haiku</strong> → $0.25/M saves 92% vs Opus</td>
+            <td>High (1,000+/month)</td>
+            <td>Small (few-shot examples)</td>
+            <td><strong>Haiku 4.5</strong><br/><span style="font-size: 13px; color: var(--slate-500);">$1/M saves 80% vs Opus</span></td>
           </tr>
           <tr>
-            <td>Anomaly detection</td>
-            <td>Medium (statistical reasoning)</td>
-            <td>Medium (flagged for review)</td>
-            <td>Medium (100-500 per month)</td>
-            <td><strong>Sonnet</strong> → Good balance of accuracy + cost</td>
+            <td><strong>Bank reconciliation</strong></td>
+            <td>Medium (matching logic)</td>
+            <td>High (month-end close)</td>
+            <td>Medium (daily/weekly)</td>
+            <td>Medium (transaction history)</td>
+            <td><strong>Sonnet 4.6</strong><br/><span style="font-size: 13px; color: var(--slate-500);">Balance of accuracy + speed</span></td>
           </tr>
           <tr>
-            <td>GL reconciliation</td>
+            <td><strong>GL reconciliation (audit-critical)</strong></td>
             <td>High (multi-step logic)</td>
-            <td>High (audit-critical)</td>
+            <td>Very high (SOX compliance)</td>
             <td>Low (monthly close only)</td>
-            <td><strong>Opus</strong> → Cannot afford errors, cost secondary</td>
+            <td>Large (subledger details)</td>
+            <td><strong>Opus 4.7</strong><br/><span style="font-size: 13px; color: var(--slate-500);">Cannot afford errors</span></td>
           </tr>
           <tr>
-            <td>Memo drafting</td>
+            <td><strong>Compliance memo drafting</strong></td>
             <td>Medium (coherent writing)</td>
-            <td>Medium (reviewed by controller)</td>
-            <td>Low (50 per month)</td>
-            <td><strong>Sonnet</strong> → Quality sufficient, cost reasonable</td>
+            <td>Medium (reviewed by CFO)</td>
+            <td>Low (50/month)</td>
+            <td>Medium (policy context)</td>
+            <td><strong>Sonnet 4.6</strong><br/><span style="font-size: 13px; color: var(--slate-500);">Quality sufficient, cost reasonable</span></td>
           </tr>
           <tr>
-            <td>Data extraction from contracts</td>
-            <td>Low (find specific clauses)</td>
+            <td><strong>Contract data extraction</strong></td>
+            <td>Low (find clauses)</td>
             <td>Medium (spot-checked)</td>
             <td>High (500+ contracts/month)</td>
-            <td><strong>Haiku</strong> → Simple extraction, volume pricing matters</td>
+            <td>Large per contract (20-50 pages)</td>
+            <td><strong>Haiku 4.5</strong><br/><span style="font-size: 13px; color: var(--slate-500);">Simple extraction, volume pricing matters</span></td>
           </tr>
           <tr>
-            <td>Tax code interpretation</td>
-            <td>High (nuanced legal reasoning)</td>
-            <td>High (client-facing advice)</td>
-            <td>Low (ad-hoc queries)</td>
-            <td><strong>Opus</strong> → Complex reasoning required, low volume = affordable</td>
+            <td><strong>Revenue recognition analysis (ASC 606)</strong></td>
+            <td>High (multi-step judgment)</td>
+            <td>Very high (audit opinion)</td>
+            <td>Low (non-standard deals)</td>
+            <td>Large (contract + guidance)</td>
+            <td><strong>Opus 4.7</strong><br/><span style="font-size: 13px; color: var(--slate-500);">Complex reasoning required</span></td>
+          </tr>
+          <tr>
+            <td><strong>Budget variance reporting</strong></td>
+            <td>Medium (narrative + numbers)</td>
+            <td>Medium (monthly review)</td>
+            <td>Medium (100 reports/month)</td>
+            <td>Medium (budget vs actuals)</td>
+            <td><strong>Sonnet 4.6</strong><br/><span style="font-size: 13px; color: var(--slate-500);">Everyday professional work</span></td>
+          </tr>
+          <tr>
+            <td><strong>Research synthesis (100+ docs)</strong></td>
+            <td>High (connecting ideas)</td>
+            <td>High (investment decision)</td>
+            <td>Low (quarterly deep-dive)</td>
+            <td>Very large (1M context)</td>
+            <td><strong>Opus 4.7</strong><br/><span style="font-size: 13px; color: var(--slate-500);">Needs 1M context window</span></td>
+          </tr>
+          <tr>
+            <td><strong>Automated payment reminders</strong></td>
+            <td>Very low (templated text)</td>
+            <td>Low (customer comms)</td>
+            <td>Very high (5,000+/month)</td>
+            <td>Small (customer name, amount)</td>
+            <td><strong>Haiku 4.5</strong><br/><span style="font-size: 13px; color: var(--slate-500);">Fastest, lowest cost at scale</span></td>
+          </tr>
+          <tr>
+            <td><strong>Financial model coding (Python/SQL)</strong></td>
+            <td>High (multi-file reasoning)</td>
+            <td>High (production tool)</td>
+            <td>Low (5-10 tools/quarter)</td>
+            <td>Large (code context)</td>
+            <td><strong>Opus 4.7</strong><br/><span style="font-size: 13px; color: var(--slate-500);">Autonomous coding capability</span></td>
           </tr>
         </tbody>
       </table>
     </div>
 
-    <h3 class="h3" style="margin-top: 48px;">Real-World Cost Comparison</h3>
-    <p>Here are three scenarios showing before/after optimization with actual monthly costs.</p>
+    <!-- PRACTICAL COST SCENARIOS -->
+    <h3 class="h3" style="margin-top: 64px;">Real-World Cost Scenarios</h3>
+    <p>Three complete workflows showing token consumption, model choice rationale, and monthly costs in USD and INR.</p>
 
-    <div class="cost-scenarios" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin: 32px 0;">
-      <div class="cost-scenario-card">
-        <div class="scenario-title">Scenario 1: Quarterly Close Review</div>
-        <div class="scenario-desc">Analyze 500 GL accounts, flag anomalies >$10K</div>
-        <div class="scenario-before">
-          <strong>Before (Opus for everything):</strong><br/>
-          8,000 tokens/account × 500 accounts = 4M tokens<br/>
-          4M × $15/M = <span class="cost-bad">$60/quarter</span>
+    <div style="display: grid; gap: 24px; margin: 32px 0;">
+      
+      <!-- Scenario 1 -->
+      <div style="border: 1px solid var(--slate-200); border-radius: 8px; padding: 24px; background: white;">
+        <div style="font-weight: 600; font-size: 18px; color: var(--navy); margin-bottom: 16px;">Scenario 1: High-Volume Invoice Processing</div>
+        <div style="background: var(--paper-warm); padding: 16px; border-radius: 6px; margin-bottom: 16px;">
+          <strong>Task:</strong> Process 10,000 invoices/month. Extract vendor, amount, GL account, flag duplicates.
         </div>
-        <div class="scenario-after">
-          <strong>After (Sonnet for flagging, Opus for analysis):</strong><br/>
-          • Haiku flags 500 accounts: 2,000 tokens × 500 = 1M × $0.25/M = $0.25<br/>
-          • Sonnet analyzes 50 flagged: 6,000 tokens × 50 = 0.3M × $3/M = $0.90<br/>
-          Total: <span class="cost-good">$1.15/quarter</span> → 98% reduction
+        <div style="display: grid; gap: 12px; font-size: 15px;">
+          <div style="display: grid; grid-template-columns: 200px 1fr; gap: 12px;">
+            <span style="color: var(--slate-500);">Model choice:</span>
+            <span><strong>Haiku 4.5</strong> (simple pattern matching, high volume)</span>
+          </div>
+          <div style="display: grid; grid-template-columns: 200px 1fr; gap: 12px;">
+            <span style="color: var(--slate-500);">Input per invoice:</span>
+            <span>500 tokens (invoice OCR text + few-shot examples)</span>
+          </div>
+          <div style="display: grid; grid-template-columns: 200px 1fr; gap: 12px;">
+            <span style="color: var(--slate-500);">Output per invoice:</span>
+            <span>100 tokens (JSON: vendor, amount, GL, duplicate flag)</span>
+          </div>
+          <div style="display: grid; grid-template-columns: 200px 1fr; gap: 12px;">
+            <span style="color: var(--slate-500);">Monthly input tokens:</span>
+            <span>10,000 × 500 = 5M tokens</span>
+          </div>
+          <div style="display: grid; grid-template-columns: 200px 1fr; gap: 12px;">
+            <span style="color: var(--slate-500);">Monthly output tokens:</span>
+            <span>10,000 × 100 = 1M tokens</span>
+          </div>
+        </div>
+        <div style="background: #E8F4F1; padding: 16px; border-radius: 6px; margin-top: 16px; border-left: 4px solid var(--green-ok);">
+          <div style="font-weight: 600; margin-bottom: 8px;">💰 Monthly Cost:</div>
+          <div style="font-size: 16px;">
+            <strong>Haiku 4.5:</strong> (5M × $1/M) + (1M × $5/M) = <span style="color: var(--green-ok); font-weight: 700; font-size: 18px;">$10</span> (₹800)
+          </div>
+          <div style="font-size: 14px; color: var(--slate-500); margin-top: 8px;">
+            <strong>If using Opus 4.7:</strong> (5M × $5/M) + (1M × $25/M) = <span style="text-decoration: line-through;">$50</span> → 5× more expensive
+          </div>
         </div>
       </div>
 
-      <div class="cost-scenario-card">
-        <div class="scenario-title">Scenario 2: Contract Review</div>
-        <div class="scenario-desc">Extract key clauses from 200 contracts/month</div>
-        <div class="scenario-before">
-          <strong>Before (Sonnet for all):</strong><br/>
-          12,000 tokens/contract × 200 = 2.4M tokens<br/>
-          2.4M × $3/M = <span class="cost-bad">$7.20/month</span>
+      <!-- Scenario 2 -->
+      <div style="border: 1px solid var(--slate-200); border-radius: 8px; padding: 24px; background: white;">
+        <div style="font-weight: 600; font-size: 18px; color: var(--navy); margin-bottom: 16px;">Scenario 2: Monthly Board Reporting</div>
+        <div style="background: var(--paper-warm); padding: 16px; border-radius: 6px; margin-bottom: 16px;">
+          <strong>Task:</strong> Draft 50 variance analysis memos/month for board deck (actuals vs budget, commentary, recommendations).
         </div>
-        <div class="scenario-after">
-          <strong>After (Haiku for extraction):</strong><br/>
-          10,000 tokens/contract × 200 = 2M tokens<br/>
-          2M × $0.25/M = <span class="cost-good">$0.50/month</span> → 93% reduction
+        <div style="display: grid; gap: 12px; font-size: 15px;">
+          <div style="display: grid; grid-template-columns: 200px 1fr; gap: 12px;">
+            <span style="color: var(--slate-500);">Model choice:</span>
+            <span><strong>Sonnet 4.6</strong> (needs reasoning + narrative quality)</span>
+          </div>
+          <div style="display: grid; grid-template-columns: 200px 1fr; gap: 12px;">
+            <span style="color: var(--slate-500);">Input per memo:</span>
+            <span>1,500 tokens (actuals, budget, historical trends, instructions)</span>
+          </div>
+          <div style="display: grid; grid-template-columns: 200px 1fr; gap: 12px;">
+            <span style="color: var(--slate-500);">Output per memo:</span>
+            <span>800 tokens (variance analysis narrative with recommendations)</span>
+          </div>
+          <div style="display: grid; grid-template-columns: 200px 1fr; gap: 12px;">
+            <span style="color: var(--slate-500);">Monthly input tokens:</span>
+            <span>50 × 1,500 = 75K tokens</span>
+          </div>
+          <div style="display: grid; grid-template-columns: 200px 1fr; gap: 12px;">
+            <span style="color: var(--slate-500);">Monthly output tokens:</span>
+            <span>50 × 800 = 40K tokens</span>
+          </div>
+        </div>
+        <div style="background: var(--amber-pale); padding: 16px; border-radius: 6px; margin-top: 16px; border-left: 4px solid var(--amber);">
+          <div style="font-weight: 600; margin-bottom: 8px;">💰 Monthly Cost:</div>
+          <div style="font-size: 16px;">
+            <strong>Sonnet 4.6:</strong> (75K × $3/M) + (40K × $15/M) = <span style="color: var(--amber); font-weight: 700; font-size: 18px;">$0.83</span> (₹66)
+          </div>
+          <div style="font-size: 14px; color: var(--slate-500); margin-top: 8px;">
+            <strong>Why not Haiku?</strong> Lacks reasoning depth for nuanced variance commentary<br/>
+            <strong>Why not Opus?</strong> Overkill for drafts reviewed by CFO; Sonnet quality sufficient
+          </div>
         </div>
       </div>
 
-      <div class="cost-scenario-card">
-        <div class="scenario-title">Scenario 3: Tax Research Agent</div>
-        <div class="scenario-desc">Complex multi-jurisdiction tax queries, 20/month</div>
-        <div class="scenario-before">
-          <strong>Before (Sonnet):</strong><br/>
-          25,000 tokens/query × 20 = 0.5M tokens<br/>
-          0.5M × $3/M = <span class="cost-bad">$1.50/month</span><br/>
-          <em>But: 15% error rate on complex queries</em>
+      <!-- Scenario 3 -->
+      <div style="border: 1px solid var(--slate-200); border-radius: 8px; padding: 24px; background: white;">
+        <div style="font-weight: 600; font-size: 18px; color: var(--navy); margin-bottom: 16px;">Scenario 3: Quarterly Investment Research (Deep Analysis)</div>
+        <div style="background: var(--paper-warm); padding: 16px; border-radius: 6px; margin-bottom: 16px;">
+          <strong>Task:</strong> Synthesize 100 research reports (10-Ks, earnings transcripts, analyst notes) into investment thesis. Quarterly task (4× per year).
         </div>
-        <div class="scenario-after">
-          <strong>After (Opus for high-stakes reasoning):</strong><br/>
-          25,000 tokens/query × 20 = 0.5M tokens<br/>
-          0.5M × $15/M = <span class="cost-worse">$7.50/month</span><br/>
-          <em>But: 2% error rate → correct model choice</em><br/>
-          <strong>Net:</strong> Pay 5× more, save rework costs
+        <div style="display: grid; gap: 12px; font-size: 15px;">
+          <div style="display: grid; grid-template-columns: 200px 1fr; gap: 12px;">
+            <span style="color: var(--slate-500);">Model choice:</span>
+            <span><strong>Opus 4.7</strong> (needs 1M context + deep reasoning)</span>
+          </div>
+          <div style="display: grid; grid-template-columns: 200px 1fr; gap: 12px;">
+            <span style="color: var(--slate-500);">Input per analysis:</span>
+            <span>800K tokens (100 reports × 8K avg + synthesis instructions)</span>
+          </div>
+          <div style="display: grid; grid-template-columns: 200px 1fr; gap: 12px;">
+            <span style="color: var(--slate-500);">Output per analysis:</span>
+            <span>5K tokens (investment thesis with key findings, risks, valuation)</span>
+          </div>
+          <div style="display: grid; grid-template-columns: 200px 1fr; gap: 12px;">
+            <span style="color: var(--slate-500);">Quarterly usage:</span>
+            <span>4 deep-dive analyses (one per quarter)</span>
+          </div>
+          <div style="display: grid; grid-template-columns: 200px 1fr; gap: 12px;">
+            <span style="color: var(--slate-500);">Quarterly input tokens:</span>
+            <span>4 × 800K = 3.2M tokens</span>
+          </div>
+          <div style="display: grid; grid-template-columns: 200px 1fr; gap: 12px;">
+            <span style="color: var(--slate-500);">Quarterly output tokens:</span>
+            <span>4 × 5K = 20K tokens</span>
+          </div>
+        </div>
+        <div style="background: #E8EDF4; padding: 16px; border-radius: 6px; margin-top: 16px; border-left: 4px solid var(--navy);">
+          <div style="font-weight: 600; margin-bottom: 8px;">💰 Quarterly Cost:</div>
+          <div style="font-size: 16px;">
+            <strong>Opus 4.7:</strong> (3.2M × $5/M) + (20K × $25/M) = <span style="color: var(--navy); font-weight: 700; font-size: 18px;">$16.50</span> (₹1,320)
+          </div>
+          <div style="font-size: 14px; color: var(--slate-500); margin-top: 8px;">
+            <strong>Why Opus?</strong> Only model with 1M context window. Sonnet 4.6 maxes at 200K → can't fit 100 reports<br/>
+            <strong>ROI:</strong> $16.50/quarter for institutional-grade research = highly cost-effective
+          </div>
         </div>
       </div>
+
     </div>
 
+    <div class="callout" style="margin-top: 48px;">
+      <div class="callout-label">Quick Decision Rule</div>
+      <p style="margin: 0;"><strong>High volume + simple task?</strong> → Haiku 4.5 saves 80%<br/>
+      <strong>Everyday professional work?</strong> → Sonnet 4.6 (default choice)<br/>
+      <strong>Complex reasoning or 1M context?</strong> → Opus 4.7 worth the premium<br/>
+      <strong>Unsure?</strong> → Start with Sonnet 4.6, switch if too slow (→ Haiku) or insufficient quality (→ Opus)</p>
+    </div>
     <h3 class="h3" style="margin-top: 48px;">Part 2: Reducing Token Usage (Strategic)</h3>
     <p>Model choice cuts costs by picking the right tier. Architecture cuts costs by using fewer tokens. Here are the high-leverage changes.</p>
 
