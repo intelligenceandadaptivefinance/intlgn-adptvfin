@@ -2593,9 +2593,10 @@ body {
 }
 
 .nav-group-items a[aria-current="page"] {
-  background: var(--navy);
-  color: white;
+  background: var(--paper-warm);
+  color: var(--ink);
   font-weight: 600;
+  border-left: 3px solid var(--amber);
 }
 
 .nav-icon {
