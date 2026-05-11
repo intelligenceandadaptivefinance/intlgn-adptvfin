@@ -27,7 +27,7 @@
     <div class="masthead-meta">
       <span>Edition 01</span>
       <span class="dot">·</span>
-      <span>105 min</span>
+      <span>135 min</span>
       <span class="dot">·</span>
       <span>Self-paced</span>
     </div>
@@ -105,13 +105,14 @@
       <button class="nav-group-header" onclick="toggleNavGroup('implementation')">
         <span class="nav-group-icon">🚀</span>
         <span class="nav-group-title">Implementation</span>
-        <span class="nav-group-count">3</span>
+        <span class="nav-group-count">4</span>
         <span class="nav-toggle">▼</span>
       </button>
       <ol class="nav-group-items">
         <li><a href="#s11" data-num="11"><span class="nav-icon">💻</span>Getting Started with Claude</a></li>
         <li><a href="#s12" data-num="12"><span class="nav-icon">💰</span>Cost Optimization</a></li>
-        <li><a href="#s13" data-num="13"><span class="nav-icon">📚</span>Tech References</a></li>
+        <li><a href="#s14" data-num="14"><span class="nav-icon">🏗️</span>Concept to Production</a></li>
+        <li><a href="#s15" data-num="15"><span class="nav-icon">📚</span>Tech References</a></li>
       </ol>
     </div>
 
@@ -128,7 +129,7 @@
       <span class="hero-title-line2">for finance professionals.</span>
     </h1>
     <p class="hero-deck">
-      One hundred and five minutes to leave knowing what an agent is, which technology stacks map to which business requirements, where agents belong in a finance workflow, and how to scope your own use case &mdash; without rushing, without jargon, and without pretending the technology is magic.
+      One hundred and thirty-five minutes to leave knowing what an agent is, which technology stacks map to which business requirements, where agents belong in a finance workflow, and how to scope your own use case &mdash; without rushing, without jargon, and without pretending the technology is magic.
     </p>
     <div class="hero-meta">
       <div class="hero-meta-block">
@@ -155,7 +156,7 @@
     <p class="lede">
       This is not a survey. It is a working session for finance professionals who keep hearing the word <em>agent</em> and need to know what it actually means in their world &mdash; and what it does not.
     </p>
-    <p>By the end of the next hundred and five minutes you will be able to scope a real agentic use case for your team: pick a loop pattern, choose the right technology stack for each component, decide what must be deterministic, design memory and databases, set human checkpoints, and walk away with a one-page PDF you can hand to an engineer or a partner. One worked example &mdash; a quarterly close anomaly review agent &mdash; runs through every section so the concepts compound rather than scatter.</p>
+    <p>By the end of the next hundred and thirty-five minutes you will be able to scope a real agentic use case for your team: pick a loop pattern, choose the right technology stack for each component, decide what must be deterministic, design memory and databases, set human checkpoints, and walk away with a one-page PDF you can hand to an engineer or a partner. One worked example &mdash; a quarterly close anomaly review agent &mdash; runs through every section so the concepts compound rather than scatter.</p>
     <div class="callout">
       <div class="callout-label">How to use this page</div>
       <p>Scroll. Toggle the diagrams. Take the quizzes (they are short). At the end, fill in the capstone worksheet and download your scoped use case as a PDF.</p>
@@ -3208,8 +3209,1003 @@
   </section>
 
   <!-- SECTION 13: TECHNOLOGY STACK REFERENCES -->
-  <section class="section" id="s13">
-    <div class="section-num">13</div>
+  <!-- SECTION 14: CONCEPT TO PRODUCTION -->
+  <section class="section" id="s14">
+    <div class="section-num">14</div>
+    <div class="section-time">30 min</div>
+    <h2 class="section-title">Concept to production: building and deploying agents in financial domain</h2>
+    <p class="lede">You know what an agent is, how it works, and which technology choices fit which requirements. Now comes the hard part: getting it into production. This section shows you how to move from the quarterly close anomaly agent you scoped in Section 9 to a deployed system that passes audit, scales to your team, and delivers measurable ROI.</p>
+
+    <h3 class="h3">The gap between "works on my laptop" and "works in production"</h3>
+    <p>The quarterly close anomaly agent you designed in the capstone is technically complete. It pulls GL data, flags anomalies, drafts commentary, routes borderline cases to humans. On your development machine, it works perfectly. But production deployment in financial services requires navigating compliance frameworks, building the right team, securing executive sponsorship, and proving value before scaling. Most agent projects fail not because the technology does not work, but because teams skip the organizational and regulatory steps between proof-of-concept and enterprise deployment.</p>
+
+    <div class="callout">
+      <div class="callout-label">What this section covers</div>
+      <p>A three-phase implementation roadmap that takes the use cases you learned in Sections 1-13 from pilot to production. You will see which roles to staff, which milestones matter, how long each phase actually takes, and how to demonstrate ROI to executives who control your budget. Every example references agents from earlier sections — invoice classification from Section 12, the close anomaly agent from Sections 1-9, reconciliation workflows from the model comparison.</p>
+    </div>
+
+    <!-- PHASE 1: PROVE VALUE WITH A PILOT -->
+    <h3 class="h3" style="margin-top: 64px;">Phase 1: Prove value with a pilot (4-6 months)</h3>
+    <p>Start with one painful but contained problem. Pick a use case where success is measurable, stakeholders are engaged, and failure will not trigger regulatory scrutiny. The goal is not perfection — it is proving the agent delivers value worth expanding.</p>
+
+    <div style="background: var(--paper-warm); border: 2px solid var(--amber); border-radius: 8px; padding: 32px; margin: 32px 0;">
+      <h4 style="font-family: var(--serif); font-weight: 600; font-size: 20px; color: var(--navy); margin: 0 0 20px 0;">Phase 1 Decision: Which use case should you pilot?</h4>
+      
+      <div style="margin-bottom: 24px;">
+        <div style="font-weight: 600; color: var(--ink); margin-bottom: 12px;">✅ Good pilot candidates from this course:</div>
+        <ul style="margin: 8px 0 0 20px; color: var(--ink-soft); line-height: 1.7;">
+          <li><strong>Quarterly close anomaly review</strong> (Section 1-9) — Contained scope, clear success metric (days to close), human validates every output</li>
+          <li><strong>Invoice classification at scale</strong> (Section 12) — High volume makes ROI obvious, errors are reviewable, low regulatory risk</li>
+          <li><strong>Flash report generation</strong> (Section 12) — Daily repetitive task, internal audience, easy to A/B test against manual process</li>
+          <li><strong>Compliance memo drafting</strong> (Section 12) — Medium complexity, human reviews every draft, demonstrates writing quality to executives</li>
+          <li><strong>Employee expense query support</strong> (Section 12) — Real-time wins, improves employee experience, does not touch critical financial data</li>
+        </ul>
+      </div>
+
+      <div style="margin-bottom: 24px;">
+        <div style="font-weight: 600; color: var(--ink); margin-bottom: 12px;">❌ Avoid as first pilot:</div>
+        <ul style="margin: 8px 0 0 20px; color: var(--ink-soft); line-height: 1.7;">
+          <li><strong>GL reconciliation (audit-critical)</strong> (Section 12) — Too high-stakes, SOX implications, requires mature governance</li>
+          <li><strong>Revenue recognition memos (ASC 606)</strong> (Section 12) — Complex judgments, external audit scrutiny, regulatory sensitivity</li>
+          <li><strong>Multi-agent orchestration</strong> (Section 3) — Too ambitious for Phase 1, coordinate agents only after single-agent success</li>
+          <li><strong>Financial model coding (Opus)</strong> (Section 12) — High complexity, long development cycles, hard to demonstrate incremental value</li>
+        </ul>
+      </div>
+
+      <div style="background: white; padding: 20px; border-radius: 6px; border-left: 4px solid var(--amber);">
+        <strong>Decision rule:</strong> Pick a use case where 70% accuracy saves significant time and 90% accuracy is achievable with human-in-the-loop. The quarterly close anomaly agent fits this perfectly — even flagging half the anomalies correctly cuts review time, and a human validates every finding before close.
+      </div>
+    </div>
+
+    <h4 style="font-family: var(--serif-display); font-weight: 400; font-size: 20px; margin: 48px 0 16px 0;">Phase 1 milestones and timeline</h4>
+    
+    <div style="margin: 32px 0;">
+      <table class="decision-table">
+        <thead>
+          <tr>
+            <th style="width: 20%;">Month</th>
+            <th style="width: 30%;">Milestone</th>
+            <th style="width: 35%;">Key Activities</th>
+            <th style="width: 15%;">Deliverable</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Month 1</strong><br/><span style="font-size: 12px; color: var(--slate-500);">Foundation</span></td>
+            <td>Technical setup + Use case scoping</td>
+            <td>
+              • Deploy Claude in Bedrock (private VPC, security controls)<br/>
+              • Staff core team (1 ML engineer, 1 cloud engineer)<br/>
+              • Complete Section 9 capstone worksheet with stakeholders<br/>
+              • Define success metrics (e.g., 50% time savings, 85% accuracy)
+            </td>
+            <td>Scoped PDF from capstone</td>
+          </tr>
+          <tr>
+            <td><strong>Month 2-3</strong><br/><span style="font-size: 12px; color: var(--slate-500);">Development</span></td>
+            <td>Agent build + Testing</td>
+            <td>
+              • Implement loop pattern from Section 4 (single-shot vs ReAct vs plan-execute)<br/>
+              • Connect tools from Section 3 (ERP/GL query, anomaly statistics)<br/>
+              • Add memory from Section 6 (session state, user preferences)<br/>
+              • Build HITL gates from Section 3 (route borderline cases to controller)<br/>
+              • Test with real Q2 close data (10-20 sample anomalies)
+            </td>
+            <td>Working prototype</td>
+          </tr>
+          <tr>
+            <td><strong>Month 4</strong><br/><span style="font-size: 12px; color: var(--slate-500);">Validation</span></td>
+            <td>Model risk assessment + Security review</td>
+            <td>
+              • Document determinism controls from Section 5 (seed, schema validation, review checkpoints)<br/>
+              • Complete audit trail requirements from Section 5<br/>
+              • Implement RBAC from Section 8½ (client-level, engagement-level restrictions)<br/>
+              • Information security review (data encryption, access controls)<br/>
+              • Model validation by risk team (accuracy, bias, explainability)
+            </td>
+            <td>Risk approval memo</td>
+          </tr>
+          <tr>
+            <td><strong>Month 5</strong><br/><span style="font-size: 12px; color: var(--slate-500);">Pilot</span></td>
+            <td>Controlled production release</td>
+            <td>
+              • Deploy for Q3 close with 2-3 controllers (shadow mode first)<br/>
+              • Agent flags anomalies, human reviews 100% of outputs<br/>
+              • Collect feedback: accuracy, time savings, usability<br/>
+              • Log every decision for audit (Section 5 audit trail requirements)
+            </td>
+            <td>Pilot results report</td>
+          </tr>
+          <tr>
+            <td><strong>Month 6</strong><br/><span style="font-size: 12px; color: var(--slate-500);">Assessment</span></td>
+            <td>ROI measurement + Executive review</td>
+            <td>
+              • Compare pilot metrics to baseline (time, accuracy, user satisfaction)<br/>
+              • Calculate cost savings (Section 12 cost optimization framework)<br/>
+              • Document what worked and what needs improvement<br/>
+              • Present to executive sponsor with go/no-go recommendation for Phase 2
+            </td>
+            <td>Business case for expansion</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="background: #E8F4F1; padding: 24px; border-radius: 8px; border-left: 4px solid var(--green-ok); margin: 32px 0;">
+      <div style="font-weight: 600; font-size: 16px; margin-bottom: 12px; color: var(--ink);">Phase 1 Success Criteria</div>
+      <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; font-size: 15px; color: var(--ink-soft);">
+        <div><strong>Accuracy:</strong> 85%+ on flagged anomalies (human validates all)</div>
+        <div><strong>Time savings:</strong> 50%+ reduction in manual review hours</div>
+        <div><strong>User satisfaction:</strong> Controllers prefer agent-assisted workflow</div>
+        <div><strong>Audit readiness:</strong> Complete decision logs for every anomaly</div>
+        <div><strong>Cost:</strong> Within pilot budget ($15-30K for 6 months)</div>
+        <div><strong>Risk approval:</strong> Model risk and infosec sign-off obtained</div>
+      </div>
+    </div>
+
+    <!-- PHASE 2: EXPAND STRATEGICALLY -->
+    <h3 class="h3" style="margin-top: 64px;">Phase 2: Expand strategically (3-6 months)</h3>
+    <p>Pilot success proves the agent works. Phase 2 scales to more users, adds complementary use cases, and begins coordinating multiple agents. This phase is where you build organizational muscle around agent deployment — repeatable processes, shared infrastructure, and cross-functional collaboration.</p>
+
+    <h4 style="font-family: var(--serif-display); font-weight: 400; font-size: 20px; margin: 48px 0 16px 0;">Expansion strategy: Which use cases to add next?</h4>
+
+    <div style="background: var(--paper-warm); padding: 32px; border-radius: 8px; margin: 32px 0;">
+      <p style="margin: 0 0 24px 0; font-weight: 600; color: var(--ink);">After proving the quarterly close anomaly agent works, expand to related workflows that share infrastructure and increase cumulative ROI:</p>
+
+      <div style="display: grid; gap: 20px;">
+        
+        <div style="background: white; padding: 20px; border-radius: 6px; border-left: 4px solid var(--amber);">
+          <div style="font-weight: 600; font-size: 16px; margin-bottom: 8px; color: var(--navy);">Expansion Path 1: Close cycle automation</div>
+          <div style="font-size: 15px; color: var(--ink-soft); line-height: 1.6;">
+            <strong>Add:</strong> Bank reconciliation (Sonnet) + Intercompany reconciliation (Sonnet) + Subledger tie-outs (Sonnet)<br/>
+            <strong>Why:</strong> Same team (controllers), same timing (month-end close), shared GL/ERP infrastructure<br/>
+            <strong>Outcome:</strong> Cut total close cycle from 10 days to 4 days across multiple workflows<br/>
+            <strong>Timeline:</strong> 3-4 months (infrastructure reuse accelerates deployment)
+          </div>
+        </div>
+
+        <div style="background: white; padding: 20px; border-radius: 6px; border-left: 4px solid var(--amber);">
+          <div style="font-weight: 600; font-size: 16px; margin-bottom: 8px; color: var(--navy);">Expansion Path 2: High-volume processing</div>
+          <div style="font-size: 15px; color: var(--ink-soft); line-height: 1.6;">
+            <strong>Add:</strong> Invoice classification (Haiku) + Transaction categorization (Haiku) + Duplicate payment detection (Haiku)<br/>
+            <strong>Why:</strong> Haiku's speed and cost (Section 12) make high-volume automation ROI-positive immediately<br/>
+            <strong>Outcome:</strong> Process 10,000+ invoices/month, flag duplicates in real-time, 80% cost reduction vs manual<br/>
+            <strong>Timeline:</strong> 2-3 months (simpler use cases, proven Haiku patterns from Section 12)
+          </div>
+        </div>
+
+        <div style="background: white; padding: 20px; border-radius: 6px; border-left: 4px solid var(--amber);">
+          <div style="font-weight: 600; font-size: 16px; margin-bottom: 8px; color: var(--navy);">Expansion Path 3: Reporting and analysis</div>
+          <div style="font-size: 15px; color: var(--ink-soft); line-height: 1.6;">
+            <strong>Add:</strong> Flash reports (Haiku) + Budget variance reporting (Sonnet) + Board deck drafting (Sonnet)<br/>
+            <strong>Why:</strong> Reporting agents complement close agents; executives see daily value, not just month-end<br/>
+            <strong>Outcome:</strong> 100+ daily flash reports automated, monthly board materials draft-ready in hours vs days<br/>
+            <strong>Timeline:</strong> 4-5 months (board deck quality matters more than speed, requires executive feedback cycles)
+          </div>
+        </div>
+
+      </div>
+
+      <div style="background: #FFF9E6; padding: 16px; border-radius: 6px; margin-top: 20px; border: 1px solid var(--amber);">
+        <strong>Expansion principle:</strong> Add use cases that share infrastructure (same database, same tools) or serve the same stakeholders (same feedback loop, same approval chain). Avoid jumping to unrelated domains — invoice processing and board reporting require different teams, different data sources, and different success metrics. Focus creates momentum.
+      </div>
+    </div>
+
+    <h4 style="font-family: var(--serif-display); font-weight: 400; font-size: 20px; margin: 48px 0 16px 0;">Agent coordination: When to orchestrate multiple agents</h4>
+    
+    <p>Phase 2 is where you begin connecting agents into workflows. The close anomaly agent feeds findings to the reconciliation agent. The invoice classifier routes exceptions to the duplicate payment detector. Coordination requires infrastructure from Section 3 (multi-agent orchestration) and careful workflow design.</p>
+
+    <div style="background: white; border: 1px solid var(--slate-200); border-radius: 8px; padding: 24px; margin: 32px 0;">
+      <div style="font-weight: 600; font-size: 18px; margin-bottom: 16px; color: var(--navy);">Example: Month-end close workflow orchestration</div>
+      <div style="display: grid; gap: 12px; font-size: 15px; color: var(--ink-soft);">
+        <div style="display: flex; align-items: start; gap: 12px;">
+          <div style="background: var(--navy); color: white; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-weight: 600; font-size: 13px;">1</div>
+          <div><strong>Anomaly Agent (Sonnet):</strong> Flags 45 unusual GL entries from Q3 close. Routes 12 borderline cases to human, auto-approves 28 as clearly benign, escalates 5 as high-risk.</div>
+        </div>
+        <div style="display: flex; align-items: start; gap: 12px;">
+          <div style="background: var(--navy); color: white; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-weight: 600; font-size: 13px;">2</div>
+          <div><strong>Reconciliation Agent (Sonnet):</strong> Takes the 5 escalated anomalies, checks if they tie out to subledgers. Finds 3 have matching entries in AR subledger (resolved), 2 remain unmatched (escalate again).</div>
+        </div>
+        <div style="display: flex; align-items: start; gap: 12px;">
+          <div style="background: var(--navy); color: white; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-weight: 600; font-size: 13px;">3</div>
+          <div><strong>Reporting Agent (Sonnet):</strong> Drafts close summary memo: "45 anomalies reviewed, 31 resolved automatically, 12 required controller judgment (approved), 2 remain open pending AP confirmation."</div>
+        </div>
+        <div style="display: flex; align-items: start; gap: 12px;">
+          <div style="background: var(--amber); color: white; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-weight: 600; font-size: 13px;">✓</div>
+          <div><strong>Result:</strong> Close cycle reduced from 10 days to 4 days. Controller focuses on 2 unresolved items instead of manually reviewing all 45.</div>
+        </div>
+      </div>
+    </div>
+
+    <p>Coordination patterns like this emerge naturally in Phase 2 once single agents prove reliable. Start with sequential handoffs (Agent A → Agent B → Agent C), not complex parallel orchestration. Use the architecture from Section 3 (ReAct or plan-execute loops) to manage state between agents.</p>
+
+    <h4 style="font-family: var(--serif-display); font-weight: 400; font-size: 20px; margin: 48px 0 16px 0;">Phase 2 team expansion</h4>
+    
+    <p>Scaling from one agent to five agents requires adding specialized roles. The Phase 1 team (1-2 ML engineers, 1 cloud engineer) cannot handle multiple simultaneous deployments, stakeholder coordination, and ongoing production support. Expand the team incrementally as new use cases prove ROI.</p>
+
+    <div style="margin: 32px 0;">
+      <table class="decision-table">
+        <thead>
+          <tr>
+            <th style="width: 20%;">Role</th>
+            <th style="width: 15%;">Phase 1 FTE</th>
+            <th style="width: 15%;">Phase 2 FTE</th>
+            <th style="width: 50%;">Why the increase?</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>AI/ML Engineer</strong></td>
+            <td>1</td>
+            <td>2-3</td>
+            <td>Multiple agents in parallel development; prompt optimization across use cases; model selection per workflow (Haiku vs Sonnet vs Opus from Section 12)</td>
+          </tr>
+          <tr>
+            <td><strong>Integration Developer</strong></td>
+            <td>0.5</td>
+            <td>1-2</td>
+            <td>Connecting to more systems (ERP, CRM, market data); building MCP servers (Section 3); API development for agent-to-agent handoffs</td>
+          </tr>
+          <tr>
+            <td><strong>Product Owner</strong></td>
+            <td>0.5</td>
+            <td>1</td>
+            <td>Prioritizing roadmap across 5+ use cases; stakeholder management across multiple departments; coordinating executive demos</td>
+          </tr>
+          <tr>
+            <td><strong>Business Analyst</strong></td>
+            <td>0.5</td>
+            <td>1-2</td>
+            <td>Requirements gathering for new use cases; process documentation; success metric design; user acceptance testing</td>
+          </tr>
+          <tr>
+            <td><strong>Platform Engineer</strong></td>
+            <td>0 (cloud engineer handles)</td>
+            <td>1</td>
+            <td>Shared infrastructure for multi-agent deployments; monitoring and observability; deployment automation; cost optimization (Section 12)</td>
+          </tr>
+          <tr>
+            <td><strong>Training Lead</strong></td>
+            <td>0 (team self-trains)</td>
+            <td>0.5</td>
+            <td>User adoption across departments; change management; building agent champions; documenting best practices</td>
+          </tr>
+          <tr style="background: var(--paper-warm); font-weight: 600;">
+            <td><strong>Total Team</strong></td>
+            <td>2.5 FTE</td>
+            <td>7.5-9.5 FTE</td>
+            <td>3× team size supports 5× agent count (efficiency from shared infrastructure and reusable patterns)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout" style="margin-top: 32px;">
+      <div class="callout-label">Risk & Compliance in Phase 2</div>
+      <p>Model risk, compliance, and infosec remain fractional roles (0.25 FTE each) in Phase 2. They review each new agent but leverage frameworks established in Phase 1. If you expand beyond 5 use cases or enter high-risk domains (trading, advisory), increase to 0.5 FTE each. Financial services cannot compromise on governance even as velocity increases.</p>
+    </div>
+
+    <!-- PHASE 3: SCALE ACROSS ENTERPRISE -->
+    <h3 class="h3" style="margin-top: 64px;">Phase 3: Scale across the enterprise (6-12 months)</h3>
+    <p>Phase 3 transforms agents from departmental tools into enterprise infrastructure. You deploy agent networks that span business units, implement formal governance, and measure impact at the organizational level. This phase separates proof-of-concept teams from those building lasting competitive advantages.</p>
+
+    <h4 style="font-family: var(--serif-display); font-weight: 400; font-size: 20px; margin: 48px 0 16px 0;">Enterprise deployment patterns</h4>
+
+    <div style="display: grid; gap: 24px; margin: 32px 0;">
+      
+      <div style="border: 2px solid var(--navy); border-radius: 8px; overflow: hidden;">
+        <div style="background: var(--navy); color: white; padding: 16px; font-weight: 600; font-size: 18px;">
+          Domain-Specific Agent Networks
+        </div>
+        <div style="padding: 24px; background: white;">
+          <p style="margin: 0 0 16px 0; color: var(--ink-soft);">Build specialized agent networks for major business functions. Each network shares domain knowledge, tools, and governance while maintaining independence from other domains.</p>
+          
+          <div style="display: grid; gap: 16px;">
+            <div style="background: var(--paper-warm); padding: 16px; border-radius: 6px;">
+              <div style="font-weight: 600; margin-bottom: 8px;">Close & Reporting Network</div>
+              <div style="font-size: 14px; color: var(--ink-soft);">
+                <strong>Agents:</strong> Anomaly detection, bank rec, intercompany rec, subledger tie-out, flash reports, board decks, variance analysis<br/>
+                <strong>Shared infrastructure:</strong> GL/ERP access, financial calendar, chart of accounts, close checklist<br/>
+                <strong>Governance:</strong> Month-end approval workflow, SOX controls, audit trail requirements
+              </div>
+            </div>
+
+            <div style="background: var(--paper-warm); padding: 16px; border-radius: 6px;">
+              <div style="font-weight: 600; margin-bottom: 8px;">AP/AR Automation Network</div>
+              <div style="font-size: 14px; color: var(--ink-soft);">
+                <strong>Agents:</strong> Invoice classification, duplicate detection, payment approval routing, vendor inquiry support, dunning notices<br/>
+                <strong>Shared infrastructure:</strong> ERP vendor master, payment systems, approval hierarchies, vendor portal<br/>
+                <strong>Governance:</strong> Segregation of duties, payment limits, fraud detection rules
+              </div>
+            </div>
+
+            <div style="background: var(--paper-warm); padding: 16px; border-radius: 6px;">
+              <div style="font-weight: 600; margin-bottom: 8px;">Compliance & Documentation Network</div>
+              <div style="font-size: 14px; color: var(--ink-soft);">
+                <strong>Agents:</strong> SOX narrative drafting, policy Q&A, footnote generation, revenue recognition memos, tax research<br/>
+                <strong>Shared infrastructure:</strong> Policy repository, accounting standards database, prior period workpapers<br/>
+                <strong>Governance:</strong> Legal review, external audit coordination, documentation retention
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="border: 2px solid var(--navy); border-radius: 8px; overflow: hidden;">
+        <div style="background: var(--navy); color: white; padding: 16px; font-weight: 600; font-size: 18px;">
+          Cross-Functional Workflows
+        </div>
+        <div style="padding: 24px; background: white;">
+          <p style="margin: 0 0 16px 0; color: var(--ink-soft);">Some workflows cut across domains and require orchestration between agent networks. These are the highest-value targets in Phase 3.</p>
+          
+          <div style="background: #E8F4F1; padding: 20px; border-radius: 6px; border-left: 4px solid var(--green-ok);">
+            <div style="font-weight: 600; font-size: 16px; margin-bottom: 12px; color: var(--navy);">Example: End-to-end invoice-to-payment workflow</div>
+            <div style="display: grid; gap: 8px; font-size: 14px; color: var(--ink-soft);">
+              <div><strong>1. Invoice arrives (email/portal)</strong> → Invoice classification agent (Haiku) extracts vendor, amount, GL code</div>
+              <div><strong>2. Duplicate check</strong> → Duplicate detection agent (Haiku) queries payment history, flags if seen before</div>
+              <div><strong>3. Approval routing</strong> → Approval agent (Sonnet) routes to appropriate approver based on amount, GL account, vendor risk</div>
+              <div><strong>4. Payment scheduling</strong> → Payment agent validates against cash forecast, schedules ACH/wire</div>
+              <div><strong>5. GL posting</strong> → Reconciliation agent confirms entry in subledger, queues for month-end tie-out</div>
+              <div><strong>6. Vendor notification</strong> → Communication agent sends payment confirmation</div>
+            </div>
+            <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--slate-200); font-weight: 600;">
+              Result: Invoice to payment in &lt;24 hours (was 5-7 days manual). 95% touchless processing. Controller only reviews exceptions.
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <h4 style="font-family: var(--serif-display); font-weight: 400; font-size: 20px; margin: 48px 0 16px 0;">Governance and model risk management at scale</h4>
+
+    <p>Enterprise-scale deployment demands mature governance. Regulators expect documentation, validation, ongoing monitoring, and clear accountability. Phase 3 governance goes beyond "did we get approval?" to "can we demonstrate control to external auditors?"</p>
+
+    <div style="margin: 32px 0;">
+      <table class="decision-table">
+        <thead>
+          <tr>
+            <th style="width: 25%;">Governance Area</th>
+            <th style="width: 40%;">Phase 3 Requirements</th>
+            <th style="width: 35%;">Links to Course Content</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Model Risk Management</strong></td>
+            <td>
+              • Formal validation for each agent (SR 11-7 compliance if regulated)<br/>
+              • Annual model review and backtesting<br/>
+              • Documented model inventory with risk tiers<br/>
+              • Model performance monitoring dashboards
+            </td>
+            <td>
+              Determinism controls (Section 5)<br/>
+              Accuracy measurement frameworks<br/>
+              Audit trail requirements
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Access Control & Data Privacy</strong></td>
+            <td>
+              • Role-based access control (RBAC) enforced across all agents<br/>
+              • Client/engagement-level data segregation<br/>
+              • Encryption at rest and in transit<br/>
+              • Regular access reviews (quarterly)
+            </td>
+            <td>
+              RBAC patterns (Section 8½)<br/>
+              Entity-level restrictions<br/>
+              GL account-range controls
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Audit Trail & Explainability</strong></td>
+            <td>
+              • Complete decision logs for every agent action<br/>
+              • Prompt + response + tool calls captured<br/>
+              • Retention aligned with document policies (7 years for financial records)<br/>
+              • Auditor-friendly reporting interface
+            </td>
+            <td>
+              Audit trail design (Section 5)<br/>
+              Database logging (Section 7)<br/>
+              S3 audit log storage (Section 3)
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Change Management & Version Control</strong></td>
+            <td>
+              • Prompt versioning and A/B testing before production<br/>
+              • Model updates follow approval workflow<br/>
+              • Rollback capability for any agent<br/>
+              • Change log for regulatory inspection
+            </td>
+            <td>
+              Determinism through versioning (Section 5)<br/>
+              Deployment patterns (Section 3¾)
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Business Continuity & Disaster Recovery</strong></td>
+            <td>
+              • Fallback to manual process if agent fails<br/>
+              • Multi-region deployment for critical agents<br/>
+              • Documented runbooks for common failures<br/>
+              • Quarterly DR testing
+            </td>
+            <td>
+              Cloud infrastructure (Section 3)<br/>
+              Human-in-the-loop fallback (Section 3)
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Compliance & Regulatory Alignment</strong></td>
+            <td>
+              • FINRA/SEC coordination (if applicable)<br/>
+              • External audit walkthrough readiness<br/>
+              • SOX control documentation for agents touching financials<br/>
+              • Privacy impact assessments (GDPR, CCPA compliance)
+            </td>
+            <td>
+              Safety considerations (Section 8½)<br/>
+              High-stakes decision points (Section 10)
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">When to hire a full-time Model Risk Manager</div>
+      <p>If you deploy more than 10 agents, touch trading or investment advisory, or operate in a heavily regulated entity (bank, broker-dealer, RIA), move Model Risk from 0.25 FTE to 1.0 FTE. Regulators expect dedicated oversight at enterprise scale. Cost: $150-200K annually. ROI: Avoids regulatory findings that halt all AI deployments.</p>
+    </div>
+
+    <h4 style="font-family: var(--serif-display); font-weight: 400; font-size: 20px; margin: 48px 0 16px 0;">Measuring ROI at enterprise scale</h4>
+
+    <p>Phase 3 success requires demonstrating value beyond individual use cases. Executives want to know: did this AI transformation move the business? Track metrics that matter to CFOs and boards.</p>
+
+    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin: 32px 0;">
+      
+      <div style="background: white; border: 1px solid var(--slate-200); border-radius: 8px; padding: 24px;">
+        <div style="font-weight: 600; font-size: 18px; margin-bottom: 16px; color: var(--navy);">Operational Metrics</div>
+        <div style="display: grid; gap: 12px; font-size: 15px;">
+          <div>
+            <div style="font-weight: 600; color: var(--ink);">Time Savings</div>
+            <div style="color: var(--ink-soft);">Hours saved per month across all agents. Example: Close cycle 10 days → 4 days = 120 hours saved/quarter.</div>
+          </div>
+          <div>
+            <div style="font-weight: 600; color: var(--ink);">Error Reduction</div>
+            <div style="color: var(--ink-soft);">Accuracy improvement. Example: Invoice classification 92% accuracy vs 78% manual baseline.</div>
+          </div>
+          <div>
+            <div style="font-weight: 600; color: var(--ink);">Processing Speed</div>
+            <div style="color: var(--ink-soft);">Throughput increase. Example: 10K invoices/month processed vs 2K manual capacity.</div>
+          </div>
+          <div>
+            <div style="font-weight: 600; color: var(--ink);">Cost Per Transaction</div>
+            <div style="color: var(--ink-soft);">Unit economics. Example: $0.05/invoice with Haiku vs $2.50 manual review.</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="background: white; border: 1px solid var(--slate-200); border-radius: 8px; padding: 24px;">
+        <div style="font-weight: 600; font-size: 18px; margin-bottom: 16px; color: var(--navy);">Financial Metrics</div>
+        <div style="display: grid; gap: 12px; font-size: 15px;">
+          <div>
+            <div style="font-weight: 600; color: var(--ink);">Hard Cost Savings</div>
+            <div style="color: var(--ink-soft);">Headcount avoided or redeployed. Example: 2 FTE redeployed from manual invoice entry to strategic analysis = $200K/year.</div>
+          </div>
+          <div>
+            <div style="font-weight: 600; color: var(--ink);">Revenue Enablement</div>
+            <div style="color: var(--ink-soft);">Faster processes enable growth. Example: Same-day invoice approval enables supplier discounts = $50K/year savings.</div>
+          </div>
+          <div>
+            <div style="font-weight: 600; color: var(--ink);">Risk Reduction</div>
+            <div style="color: var(--ink-soft);">Fraud/error prevention. Example: Duplicate payment detection prevents $100K in duplicate checks annually.</div>
+          </div>
+          <div>
+            <div style="font-weight: 600; color: var(--ink);">Infrastructure Cost</div>
+            <div style="color: var(--ink-soft);">Agent operational cost. Example: Section 12 analysis shows $10/month for 10K invoices with Haiku = $120/year.</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="background: white; border: 1px solid var(--slate-200); border-radius: 8px; padding: 24px;">
+        <div style="font-weight: 600; font-size: 18px; margin-bottom: 16px; color: var(--navy);">User Experience Metrics</div>
+        <div style="display: grid; gap: 12px; font-size: 15px;">
+          <div>
+            <div style="font-weight: 600; color: var(--ink);">User Satisfaction</div>
+            <div style="color: var(--ink-soft);">NPS or CSAT scores. Example: Controllers rate close agent 8.5/10 vs 6.0/10 for manual process.</div>
+          </div>
+          <div>
+            <div style="font-weight: 600; color: var(--ink);">Adoption Rate</div>
+            <div style="color: var(--ink-soft);">% of eligible users actively using agents. Example: 85% of AP team uses invoice agent vs 15% at launch.</div>
+          </div>
+          <div>
+            <div style="font-weight: 600; color: var(--ink);">Support Tickets</div>
+            <div style="color: var(--ink-soft);">Reduction in helpdesk volume. Example: Employee expense queries down 60% with support agent.</div>
+          </div>
+          <div>
+            <div style="font-weight: 600; color: var(--ink);">Time to Resolution</div>
+            <div style="color: var(--ink-soft);">Speed of issue resolution. Example: Compliance memo drafts ready same-day vs 3-day turnaround.</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="background: white; border: 1px solid var(--slate-200); border-radius: 8px; padding: 24px;">
+        <div style="font-weight: 600; font-size: 18px; margin-bottom: 16px; color: var(--navy);">Strategic Metrics</div>
+        <div style="display: grid; gap: 12px; font-size: 15px;">
+          <div>
+            <div style="font-weight: 600; color: var(--ink);">Close Cycle Time</div>
+            <div style="color: var(--ink-soft);">Days from month-end to published financials. Example: 10 days → 4 days enables faster decision-making.</div>
+          </div>
+          <div>
+            <div style="font-weight: 600; color: var(--ink);">Audit Readiness</div>
+            <div style="color: var(--ink-soft);">Complete documentation. Example: External auditors validate agent outputs in 2 hours vs 2 days manual review.</div>
+          </div>
+          <div>
+            <div style="font-weight: 600; color: var(--ink);">Scalability</div>
+            <div style="color: var(--ink-soft);">Growth without proportional headcount. Example: 50% revenue growth with same close team headcount.</div>
+          </div>
+          <div>
+            <div style="font-weight: 600; color: var(--ink);">Innovation Velocity</div>
+            <div style="color: var(--ink-soft);">Time to deploy new agents. Example: Phase 1 took 6 months, Phase 3 agents deploy in 6 weeks (infrastructure reuse).</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div style="background: #E8F4F1; padding: 24px; border-radius: 8px; border-left: 4px solid var(--green-ok); margin: 32px 0;">
+      <div style="font-weight: 600; font-size: 16px; margin-bottom: 12px; color: var(--ink);">ROI Dashboard Example (12-month Phase 3 results)</div>
+      <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; font-size: 15px;">
+        <div><strong>Agents deployed:</strong> 15 across 3 networks</div>
+        <div><strong>Users:</strong> 120 (finance, AP, compliance)</div>
+        <div><strong>Time savings:</strong> 18,000 hours/year (9 FTE equivalent)</div>
+        <div><strong>Cost savings:</strong> $1.2M/year (headcount leverage)</div>
+        <div><strong>Infrastructure cost:</strong> $180K/year (Bedrock + team)</div>
+        <div><strong>Net savings:</strong> $1.02M/year (ROI: 567%)</div>
+        <div><strong>Close cycle:</strong> 10 days → 3.5 days</div>
+        <div><strong>User satisfaction:</strong> 8.2/10 average NPS</div>
+      </div>
+    </div>
+
+    <!-- TIMELINE DECISION MATRIX -->
+    <h3 class="h3" style="margin-top: 64px;">Timeline decision matrix: How long will YOUR use case take?</h3>
+    <p>Not all finance agents take the same time to deploy. Use this matrix to estimate realistic timelines based on the use case characteristics you learned throughout this course.</p>
+
+    <div style="margin: 32px 0; overflow-x: auto;">
+      <table class="decision-table" style="width: 100%; min-width: 900px;">
+        <thead>
+          <tr>
+            <th>Use Case (from this course)</th>
+            <th>Reasoning Complexity</th>
+            <th>Regulatory Risk</th>
+            <th>Integration Complexity</th>
+            <th>Recommended Phase</th>
+            <th>Timeline</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="background: var(--paper-warm);">
+            <td><strong>Flash reports (Haiku)</strong><br/><span style="font-size: 12px;">Section 12</span></td>
+            <td>Low</td>
+            <td>Low (internal only)</td>
+            <td>Low (read-only DB)</td>
+            <td>Pilot (Phase 1)</td>
+            <td><strong>4 months</strong></td>
+          </tr>
+          <tr>
+            <td><strong>Invoice classification (Haiku)</strong><br/><span style="font-size: 12px;">Section 12</span></td>
+            <td>Low</td>
+            <td>Low (errors reviewable)</td>
+            <td>Medium (ERP integration)</td>
+            <td>Pilot (Phase 1)</td>
+            <td><strong>4-5 months</strong></td>
+          </tr>
+          <tr>
+            <td><strong>Employee expense support (Haiku)</strong><br/><span style="font-size: 12px;">Section 12</span></td>
+            <td>Low</td>
+            <td>Low (policy Q&A)</td>
+            <td>Low (knowledge base)</td>
+            <td>Pilot (Phase 1)</td>
+            <td><strong>4 months</strong></td>
+          </tr>
+          <tr style="background: #FFF9E6;">
+            <td><strong>Quarterly close anomaly (Sonnet)</strong><br/><span style="font-size: 12px;">Sections 1-9</span></td>
+            <td>Medium</td>
+            <td>Medium (HITL validation)</td>
+            <td>Medium (GL + stats tools)</td>
+            <td>Pilot (Phase 1)</td>
+            <td><strong>5-6 months</strong></td>
+          </tr>
+          <tr>
+            <td><strong>Compliance memo drafting (Sonnet)</strong><br/><span style="font-size: 12px;">Section 12</span></td>
+            <td>Medium</td>
+            <td>Medium (CFO reviews)</td>
+            <td>Low (doc templates)</td>
+            <td>Pilot (Phase 1)</td>
+            <td><strong>5-6 months</strong></td>
+          </tr>
+          <tr style="background: #FFF9E6;">
+            <td><strong>Bank reconciliation (Sonnet)</strong><br/><span style="font-size: 12px;">Section 12</span></td>
+            <td>Medium</td>
+            <td>High (month-end close)</td>
+            <td>Medium (bank feeds)</td>
+            <td>Expand (Phase 2)</td>
+            <td><strong>6-7 months</strong></td>
+          </tr>
+          <tr>
+            <td><strong>Board deck drafting (Sonnet)</strong><br/><span style="font-size: 12px;">Section 12</span></td>
+            <td>Medium-High</td>
+            <td>High (executive review)</td>
+            <td>Medium (data + narrative)</td>
+            <td>Expand (Phase 2)</td>
+            <td><strong>6-8 months</strong></td>
+          </tr>
+          <tr style="background: #E8EDF4;">
+            <td><strong>GL reconciliation SOX (Opus)</strong><br/><span style="font-size: 12px;">Section 12</span></td>
+            <td>High</td>
+            <td>Very High (audit-critical)</td>
+            <td>High (multi-system)</td>
+            <td>Scale (Phase 3)</td>
+            <td><strong>9-10 months</strong></td>
+          </tr>
+          <tr>
+            <td><strong>Revenue recognition ASC 606 (Opus)</strong><br/><span style="font-size: 12px;">Section 12</span></td>
+            <td>High</td>
+            <td>Very High (external audit)</td>
+            <td>Medium (contract data)</td>
+            <td>Scale (Phase 3)</td>
+            <td><strong>9-12 months</strong></td>
+          </tr>
+          <tr style="background: #E8EDF4;">
+            <td><strong>Research synthesis 100+ docs (Opus)</strong><br/><span style="font-size: 12px;">Section 12</span></td>
+            <td>High</td>
+            <td>High (investment decisions)</td>
+            <td>High (market data)</td>
+            <td>Scale (Phase 3)</td>
+            <td><strong>8-10 months</strong></td>
+          </tr>
+          <tr>
+            <td><strong>Financial model coding (Opus)</strong><br/><span style="font-size: 12px;">Section 12</span></td>
+            <td>High</td>
+            <td>High (production tools)</td>
+            <td>High (code generation)</td>
+            <td>Scale (Phase 3)</td>
+            <td><strong>10-12 months</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">Reading the timeline matrix</div>
+      <p><strong>Low-complexity + low-risk:</strong> 4-5 months (pilot candidates). <strong>Medium complexity or risk:</strong> 5-8 months (pilot if HITL strong, otherwise Phase 2). <strong>High complexity + high risk:</strong> 9-12 months (wait for Phase 3 governance maturity). Integration complexity adds 1-2 months regardless of other factors.</p>
+    </div>
+
+    <!-- TEAM STRUCTURE -->
+    <h3 class="h3" style="margin-top: 64px;">Complete team structure: From pilot to enterprise scale</h3>
+    <p>Building the agents you learned about in this course requires a cross-functional team that grows with deployment scale. Here is the full team structure across all three phases, with finance-specific role descriptions.</p>
+
+    <div style="margin: 32px 0; overflow-x: auto;">
+      <table class="decision-table" style="width: 100%; min-width: 1000px;">
+        <thead>
+          <tr>
+            <th style="width: 18%;">Role</th>
+            <th style="width: 10%;">Phase 1 FTE</th>
+            <th style="width: 10%;">Phase 2 FTE</th>
+            <th style="width: 10%;">Phase 3 FTE</th>
+            <th style="width: 27%;">Key Responsibilities</th>
+            <th style="width: 25%;">Finance Domain Requirements</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="background: var(--paper-warm); font-weight: 600;">
+            <td colspan="6" style="text-align: left;">CORE TECHNICAL TEAM</td>
+          </tr>
+          <tr>
+            <td><strong>AI/ML Engineer</strong></td>
+            <td>1</td>
+            <td>2-3</td>
+            <td>3-4</td>
+            <td>
+              Agent development, prompt optimization, model selection (Haiku/Sonnet/Opus from Section 12), loop pattern implementation (Section 4), testing and validation
+            </td>
+            <td>
+              Must understand financial workflows (close cycle, reconciliation). Familiar with ERP data structures. Ability to explain agent decisions to auditors.
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Cloud/Platform Engineer</strong></td>
+            <td>1</td>
+            <td>1</td>
+            <td>1-2</td>
+            <td>
+              AWS infrastructure (Bedrock, S3, RDS from Section 3), VPC security, deployment automation, monitoring, cost optimization (Section 12)
+            </td>
+            <td>
+              Financial services cloud security experience. SOC 2 compliance knowledge. Private endpoint setup for sensitive data isolation.
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Integration Developer</strong></td>
+            <td>0.5</td>
+            <td>1-2</td>
+            <td>2-3</td>
+            <td>
+              System connectors (ERP, GL, CRM), API development, MCP server setup (Section 3), tool development, database integration (Section 7)
+            </td>
+            <td>
+              Deep knowledge of ERP systems (SAP, Oracle, NetSuite). GL/subledger data models. FIX protocol for trading data (if applicable).
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Platform Engineer</strong></td>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+            <td>
+              DevSecOps, CI/CD pipelines, observability (Section 5 audit trails), deployment automation, infrastructure as code
+            </td>
+            <td>
+              Change control processes for financial systems. Audit log retention requirements. DR/BC testing protocols.
+            </td>
+          </tr>
+          <tr style="background: var(--paper-warm); font-weight: 600;">
+            <td colspan="6" style="text-align: left;">BUSINESS STAKEHOLDERS</td>
+          </tr>
+          <tr>
+            <td><strong>Product Owner</strong></td>
+            <td>0.5</td>
+            <td>1</td>
+            <td>1</td>
+            <td>
+              Roadmap prioritization, stakeholder management, user acceptance, executive communication, success metric ownership
+            </td>
+            <td>
+              Finance operations background (AP, close, reporting). Credibility with controllers and CFO. Understanding of audit requirements.
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Business Analyst</strong></td>
+            <td>0.5</td>
+            <td>1-2</td>
+            <td>2</td>
+            <td>
+              Requirements gathering, process documentation (Section 9 capstone), workflow mapping, UAT coordination, training material creation
+            </td>
+            <td>
+              Accounting knowledge (GAAP/IFRS). Familiarity with close process. Ability to translate controller needs into technical requirements.
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Training/Change Lead</strong></td>
+            <td>0</td>
+            <td>0.5</td>
+            <td>1</td>
+            <td>
+              User adoption, change management, documentation, building champion network, measuring user satisfaction
+            </td>
+            <td>
+              Experience training finance teams. Change management in regulated environments. Understanding of controller workflows.
+            </td>
+          </tr>
+          <tr style="background: var(--paper-warm); font-weight: 600;">
+            <td colspan="6" style="text-align: left;">RISK & COMPLIANCE (Fractional roles throughout)</td>
+          </tr>
+          <tr>
+            <td><strong>Model Risk Manager</strong></td>
+            <td>0.25</td>
+            <td>0.25-0.5</td>
+            <td>0.5-1.0</td>
+            <td>
+              Model validation (SR 11-7 if applicable), ongoing monitoring, performance backtesting, documentation reviews, regulatory liaison
+            </td>
+            <td>
+              SR 11-7 expertise for banks/RIAs. Quantitative background. Experience validating ML models. Understands financial model risk frameworks.
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Compliance Analyst</strong></td>
+            <td>0.25</td>
+            <td>0.25</td>
+            <td>0.5</td>
+            <td>
+              Regulatory review (FINRA, SEC if applicable), policy alignment, external audit coordination, documentation retention
+            </td>
+            <td>
+              Financial services regulations. SOX control design. Privacy laws (GDPR, CCPA). Audit committee reporting.
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Information Security</strong></td>
+            <td>0.25</td>
+            <td>0.25</td>
+            <td>0.5</td>
+            <td>
+              Security assessments, RBAC implementation (Section 8½), access reviews, penetration testing, incident response
+            </td>
+            <td>
+              Financial services security standards (FFIEC, PCI if applicable). Cloud security expertise. Data classification frameworks.
+            </td>
+          </tr>
+          <tr style="background: #E8F4F1; font-weight: 600;">
+            <td><strong>TOTAL TEAM</strong></td>
+            <td><strong>3.5 FTE</strong></td>
+            <td><strong>7.5-10.0 FTE</strong></td>
+            <td><strong>12.5-16.0 FTE</strong></td>
+            <td colspan="2" style="text-align: left;">
+              <strong>Cost estimate:</strong> Phase 1: $350-450K/year · Phase 2: $900K-1.2M/year · Phase 3: $1.5-2.0M/year (fully loaded with benefits, tools, infrastructure)
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">Hiring vs partnering</div>
+      <p>Many finance teams do not have ML engineers or cloud engineers in-house. <strong>Option 1:</strong> Hire (slower, expensive, but builds internal capability). <strong>Option 2:</strong> Partner with AI consulting firm or systems integrator for Phase 1-2, transition to internal team by Phase 3. <strong>Option 3:</strong> Hybrid — hire Product Owner and Business Analysts (finance domain critical), contract ML/cloud roles (technical skills commoditized).</p>
+    </div>
+
+    <!-- SUCCESS FRAMEWORK -->
+    <h3 class="h3" style="margin-top: 64px;">Success framework: How to know if you are on track</h3>
+    <p>Agent deployments fail when teams lose momentum between phases or cannot demonstrate value to executives. Use these checkpoints to course-correct before problems compound.</p>
+
+    <div style="display: grid; gap: 24px; margin: 32px 0;">
+      
+      <div style="border: 1px solid var(--slate-200); border-radius: 8px; padding: 24px; background: white;">
+        <div style="font-weight: 600; font-size: 18px; margin-bottom: 16px; color: var(--navy);">Phase 1 Success Indicators (Month 6)</div>
+        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; font-size: 15px;">
+          <div style="background: var(--paper-warm); padding: 12px; border-radius: 4px;">
+            <div style="font-weight: 600; margin-bottom: 4px; color: var(--ink);">✓ Technical</div>
+            <div style="color: var(--ink-soft); font-size: 14px;">Agent deployed in production with 85%+ accuracy. Audit trail complete. Security review passed.</div>
+          </div>
+          <div style="background: var(--paper-warm); padding: 12px; border-radius: 4px;">
+            <div style="font-weight: 600; margin-bottom: 4px; color: var(--ink);">✓ Business</div>
+            <div style="color: var(--ink-soft); font-size: 14px;">Users prefer agent to manual process. 50%+ time savings measured. Executive sponsor still engaged.</div>
+          </div>
+          <div style="background: var(--paper-warm); padding: 12px; border-radius: 4px;">
+            <div style="font-weight: 600; margin-bottom: 4px; color: var(--ink);">✓ Financial</div>
+            <div style="color: var(--ink-soft); font-size: 14px;">ROI case approved for Phase 2. Budget secured for team expansion. Cost per transaction &lt; manual baseline.</div>
+          </div>
+          <div style="background: var(--paper-warm); padding: 12px; border-radius: 4px;">
+            <div style="font-weight: 600; margin-bottom: 4px; color: var(--ink);">✓ Organizational</div>
+            <div style="color: var(--ink-soft); font-size: 14px;">Users requesting new use cases. Other departments asking for agents. Team retention strong.</div>
+          </div>
+        </div>
+        <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--slate-200); font-weight: 600; color: var(--red-no);">
+          <strong>Red flags:</strong> Users reverting to manual process · Accuracy below 70% · No executive engagement · Budget requests denied
+        </div>
+      </div>
+
+      <div style="border: 1px solid var(--slate-200); border-radius: 8px; padding: 24px; background: white;">
+        <div style="font-weight: 600; font-size: 18px; margin-bottom: 16px; color: var(--navy);">Phase 2 Success Indicators (Month 12)</div>
+        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; font-size: 15px;">
+          <div style="background: var(--paper-warm); padding: 12px; border-radius: 4px;">
+            <div style="font-weight: 600; margin-bottom: 4px; color: var(--ink);">✓ Scale</div>
+            <div style="color: var(--ink-soft); font-size: 14px;">5+ agents in production. Multi-agent orchestration working. Shared infrastructure reused across use cases.</div>
+          </div>
+          <div style="background: var(--paper-warm); padding: 12px; border-radius: 4px;">
+            <div style="font-weight: 600; margin-bottom: 4px; color: var(--ink);">✓ Efficiency</div>
+            <div style="color: var(--ink-soft); font-size: 14px;">New agents deploy faster than Phase 1 (infrastructure leverage). Team velocity increasing not decreasing.</div>
+          </div>
+          <div style="background: var(--paper-warm); padding: 12px; border-radius: 4px;">
+            <div style="font-weight: 600; margin-bottom: 4px; color: var(--ink);">✓ Governance</div>
+            <div style="color: var(--ink-soft); font-size: 14px;">Model risk framework operational. External audit comfortable with agent outputs. No compliance findings.</div>
+          </div>
+          <div style="background: var(--paper-warm); padding: 12px; border-radius: 4px;">
+            <div style="font-weight: 600; margin-bottom: 4px; color: var(--ink);">✓ Culture</div>
+            <div style="color: var(--ink-soft); font-size: 14px;">Finance team requests agents proactively. Change champions active across departments. Low resistance.</div>
+          </div>
+        </div>
+        <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--slate-200); font-weight: 600; color: var(--red-no);">
+          <strong>Red flags:</strong> Deployment velocity slowing · Technical debt accumulating · User complaints increasing · Regulatory concerns emerging
+        </div>
+      </div>
+
+      <div style="border: 1px solid var(--slate-200); border-radius: 8px; padding: 24px; background: white;">
+        <div style="font-weight: 600; font-size: 18px; margin-bottom: 16px; color: var(--navy);">Phase 3 Success Indicators (Month 18-24)</div>
+        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; font-size: 15px;">
+          <div style="background: var(--paper-warm); padding: 12px; border-radius: 4px;">
+            <div style="font-weight: 600; margin-bottom: 4px; color: var(--ink);">✓ Enterprise Impact</div>
+            <div style="color: var(--ink-soft); font-size: 14px;">10-15+ agents deployed. Cross-functional workflows automated. Board-level ROI metrics presented and validated.</div>
+          </div>
+          <div style="background: var(--paper-warm); padding: 12px; border-radius: 4px;">
+            <div style="font-weight: 600; margin-bottom: 4px; color: var(--ink);">✓ Operational Excellence</div>
+            <div style="color: var(--ink-soft); font-size: 14px;">Close cycle reduced 50%+. Throughput doubled without headcount increase. Error rates at or below manual baseline.</div>
+          </div>
+          <div style="background: var(--paper-warm); padding: 12px; border-radius: 4px;">
+            <div style="font-weight: 600; margin-bottom: 4px; color: var(--ink);">✓ Maturity</div>
+            <div style="color: var(--ink-soft); font-size: 14px;">Governance automated. Auditors validate processes independently. DR tested quarterly. Regulatory comfort achieved.</div>
+          </div>
+          <div style="background: var(--paper-warm); padding: 12px; border-radius: 4px;">
+            <div style="font-weight: 600; margin-bottom: 4px; color: var(--ink);">✓ Strategic Position</div>
+            <div style="color: var(--ink-soft); font-size: 14px;">Competitive advantage recognized. Agent capability attracts talent. Platform supports business growth without linear cost scaling.</div>
+          </div>
+        </div>
+        <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--slate-200); font-weight: 600; color: var(--red-no);">
+          <strong>Red flags:</strong> ROI declining · Regulatory findings · Platform instability · Team burnout · Stakeholder dissatisfaction
+        </div>
+      </div>
+
+    </div>
+
+    <!-- FINAL CHECKLIST -->
+    <h3 class="h3" style="margin-top: 64px;">Final implementation checklist</h3>
+    <p>Before starting Phase 1, ensure these foundations are in place. Skipping any of these significantly increases failure risk.</p>
+
+    <div style="background: white; border: 2px solid var(--navy); border-radius: 8px; padding: 32px; margin: 32px 0;">
+      <div style="display: grid; gap: 16px; font-size: 15px;">
+        
+        <div style="display: flex; gap: 12px;">
+          <div style="background: var(--navy); color: white; border-radius: 4px; width: 32px; height: 32px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-weight: 600;">□</div>
+          <div>
+            <strong>Executive sponsorship secured:</strong> CFO or Controller committed for 12+ months. Budget approved through Phase 2. Quarterly review cadence established.
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 12px;">
+          <div style="background: var(--navy); color: white; border-radius: 4px; width: 32px; height: 32px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-weight: 600;">□</div>
+          <div>
+            <strong>Use case scoped:</strong> Section 9 capstone completed. Success metrics defined. Stakeholder alignment documented. Regulatory risk assessed.
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 12px;">
+          <div style="background: var(--navy); color: white; border-radius: 4px; width: 32px; height: 32px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-weight: 600;">□</div>
+          <div>
+            <strong>Core team hired or contracted:</strong> 1 ML engineer, 1 cloud engineer, 0.5 business analyst minimum. Roles have finance domain knowledge or paired with domain experts.
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 12px;">
+          <div style="background: var(--navy); color: white; border-radius: 4px; width: 32px; height: 32px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-weight: 600;">□</div>
+          <div>
+            <strong>Technical foundation ready:</strong> AWS account with Bedrock access. Security controls per FFIEC (if applicable). Development environment with sample data.
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 12px;">
+          <div style="background: var(--navy); color: white; border-radius: 4px; width: 32px; height: 32px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-weight: 600;">□</div>
+          <div>
+            <strong>Governance framework defined:</strong> Model risk process agreed (even if lightweight for Phase 1). RBAC requirements documented (Section 8½). Audit trail requirements clear (Section 5).
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 12px;">
+          <div style="background: var(--navy); color: white; border-radius: 4px; width: 32px; height: 32px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-weight: 600;">□</div>
+          <div>
+            <strong>Data access secured:</strong> Permissions to production systems (read-only initially). Test data available. Data privacy reviewed (PII handling, client segregation).
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 12px;">
+          <div style="background: var(--navy); color: white; border-radius: 4px; width: 32px; height: 32px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-weight: 600;">□</div>
+          <div>
+            <strong>User champions identified:</strong> 2-3 power users committed to testing and feedback. Controllers or senior analysts who will advocate to peers.
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 12px;">
+          <div style="background: var(--navy); color: white; border-radius: 4px; width: 32px; height: 32px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-weight: 600;">□</div>
+          <div>
+            <strong>This course completed:</strong> Team understands agent architecture (Section 3), loop patterns (Section 4), determinism requirements (Section 5), memory design (Section 6), database choices (Section 7), safety considerations (Section 8½), cost optimization (Section 12), and common pitfalls (Section 10).
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top: 48px;">
+      <div class="callout-label">What happens next</div>
+      <p>You have completed the implementation roadmap. You know which use case to pilot, which team to build, how long it will take, and how to measure success. The capstone PDF from Section 9 is your deployment blueprint. The technology choices from Sections 3-8 are your architecture guide. The cost analysis from Section 12 is your budget justification. Now: schedule the kickoff meeting, assign the Phase 1 milestones, and start building. The quarterly close anomaly agent you scoped is waiting to go into production.</p>
+    </div>
+
+  </section>
+  <section class="section" id="s15">
+    <div class="section-num">15</div>
     <div class="section-time">5 min</div>
     <h2 class="section-title">Technology stack references</h2>
     <p class="lede">Every technology mentioned in this course, organized by architecture layer, with official websites and documentation links. Bookmark this page — you will return to it.</p>
